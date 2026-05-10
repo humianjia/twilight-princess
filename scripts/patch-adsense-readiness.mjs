@@ -137,7 +137,7 @@ const replacements = [
   ],
   [
     "A polished Twilight Princess walkthrough with story chapters, reference guides, and locally hosted screenshots.",
-    "An editorial Twilight Princess guide with chapter walkthroughs, strategy notes, and reference pages.",
+    "An editorial Twilight Princess guide with walkthrough chapters, original essays, strategy notes, and reference pages.",
   ],
   [
     "This version focuses on a clean English reading experience built from the current project archive. The goal is not to mirror every original sentence, but to turn the collected material into a more readable walkthrough site with stable navigation and preserved local media.",
@@ -146,6 +146,10 @@ const replacements = [
   [
     "231 locally hosted assets",
     "231 supporting media items",
+  ],
+  [
+    "4 supporting reference pages",
+    "3 original feature essays",
   ],
   [
     "English root site with mirrored Chinese routes",
@@ -168,6 +172,9 @@ const replacements = [
 const routeGroups = {
   reference: new Set([
     "reference/index.html",
+    "reference/why-midna-works/index.html",
+    "reference/why-ordon-village-matters/index.html",
+    "reference/dungeon-order-and-pacing/index.html",
     "intro/index.html",
     "characters/index.html",
     "epilogue/index.html",
@@ -814,6 +821,9 @@ function writeSupportFiles() {
     "index.html",
     "chapters/index.html",
     "reference/index.html",
+    "reference/why-midna-works/index.html",
+    "reference/why-ordon-village-matters/index.html",
+    "reference/dungeon-order-and-pacing/index.html",
     "intro/index.html",
     "characters/index.html",
     "epilogue/index.html",
