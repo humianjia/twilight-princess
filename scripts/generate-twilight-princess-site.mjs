@@ -30,7 +30,9 @@ const defaultSiteConfig = {
   shortName: "TP Chronicle",
   themeColor: "#173227",
   backgroundColor: "#f3ead8",
-  adsTxtEntries: [],
+  adsTxtEntries: [
+    "google.com, pub-7534347140708021, DIRECT, f08c47fec0942fa0",
+  ],
 };
 
 const loadSiteConfig = async () => {
@@ -269,6 +271,11 @@ const adsTxtEntries = Array.isArray(siteConfig.adsTxtEntries)
       .map((entry) => (typeof entry === "string" ? entry.trim() : ""))
       .filter(Boolean)
   : [];
+const adsenseClient = (() => {
+  const googleEntry = adsTxtEntries.find((entry) => /google\.com,\s*pub-\d+/i.test(entry));
+  const match = googleEntry?.match(/google\.com,\s*(pub-\d+)/i);
+  return match ? `ca-${match[1]}` : "";
+})();
 
 const withSiteUrl = (routePath, lang) =>
   absoluteSiteUrl
@@ -1044,7 +1051,7 @@ const renderPolicyPage = (lang, page) => {
             <div class="hero-copy">
               <p class="eyebrow">Privacy</p>
               <h1>Privacy Policy</h1>
-              <p class="lede">This policy explains how Twilight Princess Chronicle may handle analytics, cookies, advertising, and direct messages once the site is publicly deployed.</p>
+              <p class="lede">This policy explains how Twilight Princess Chronicle handles analytics, cookies, direct messages, and Google AdSense-related advertising disclosures on the live site.</p>
             </div>
             <div class="hero-art policy-art">
               <div class="policy-mark">PR</div>
@@ -1059,8 +1066,8 @@ const renderPolicyPage = (lang, page) => {
             </article>
             <article class="panel keyline">
               <h2>Cookies And Advertising</h2>
-              <p>Third-party services such as analytics platforms or advertising networks may use cookies or similar technologies if they are enabled after launch.</p>
-              <p>If the production site runs advertising, this page should reflect the final ad provider, the live domain, and any consent or preference tools offered to visitors in applicable regions.</p>
+              <p>Google AdSense may use cookies or similar technologies on the live site to serve ads, measure ad performance, and support fraud and abuse prevention.</p>
+              <p>The authorized seller declaration for this site is published at <code>/ads.txt</code>. If visitor consent tools, regional ad controls, or additional advertising technologies are enabled later, this page should be updated again to reflect the exact live setup.</p>
             </article>
           </section>
         </main>

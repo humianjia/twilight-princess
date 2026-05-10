@@ -9,7 +9,9 @@ const defaultSiteConfig = {
   shortName: "TP Chronicle",
   themeColor: "#173227",
   backgroundColor: "#f3ead8",
-  adsTxtEntries: [],
+  adsTxtEntries: [
+    "google.com, pub-7534347140708021, DIRECT, f08c47fec0942fa0",
+  ],
 };
 const siteConfig = fs.existsSync(siteConfigPath)
   ? { ...defaultSiteConfig, ...JSON.parse(fs.readFileSync(siteConfigPath, "utf8")) }
@@ -37,6 +39,11 @@ const adsTxtEntries = Array.isArray(siteConfig.adsTxtEntries)
       .map((entry) => (typeof entry === "string" ? entry.trim() : ""))
       .filter(Boolean)
   : [];
+const adsenseClient = (() => {
+  const googleEntry = adsTxtEntries.find((entry) => /google\.com,\s*pub-\d+/i.test(entry));
+  const match = googleEntry?.match(/google\.com,\s*(pub-\d+)/i);
+  return match ? `ca-${match[1]}` : "";
+})();
 
 const policyPages = [
   { slug: "about", titleEn: "About This Site", titleZh: "关于本站" },
@@ -210,13 +217,13 @@ const policyBodies = {
       eyebrow: "Privacy",
       heading: "Privacy Policy",
       lede:
-        "This page explains how Twilight Princess Chronicle handles analytics, cookies, contact messages, and any advertising features that may be enabled on the live site.",
+        "This page explains how Twilight Princess Chronicle handles analytics, cookies, contact messages, and Google AdSense-related advertising disclosures on the live site.",
       leftTitle: "Data handling",
       leftHtml:
         "<p>The site currently operates as a static website. It does not include account registration, user dashboards, or direct public uploads.</p><p>If you contact the site owner by email, your message and email address may be retained only as long as reasonably necessary to reply, follow up, or document the request.</p><p>If analytics or measurement tools are enabled later, this page will be updated to identify the provider, describe the data involved, and explain any applicable visitor controls.</p>",
       rightTitle: "Cookies and advertising",
       rightHtml:
-        "<p>Third-party services such as analytics platforms or advertising networks may use cookies or similar technologies if they are enabled on the live site.</p><p>If Google AdSense or another advertising provider is activated, this page will be updated to reflect the active provider, the live domain, and any consent or preference tools offered to visitors where required.</p>",
+        "<p>Google AdSense may use cookies or similar technologies on the live site to serve ads, measure ad performance, and help manage fraud and abuse prevention.</p><p>The authorized seller declaration for this site is published at <code>/ads.txt</code>. If visitor consent, regional ad controls, or additional ad technologies are enabled later, this page should be updated again to reflect the exact live setup.</p>",
     },
     contact: {
       title: "Contact | Twilight Princess Chronicle",
@@ -567,6 +574,9 @@ function patchPageNotes(html) {
 function injectIconsAndManifest(html, route) {
   const depth = route.split("/").length - 1;
   const prefix = depth === 0 ? "" : "../".repeat(depth);
+  const adsenseScript = adsenseClient
+    ? `        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClient}" crossorigin="anonymous"></script>`
+    : "";
   const iconBlock = [
     `        <meta name="theme-color" content="${themeColor}">`,
     `        <meta name="application-name" content="Twilight Princess Chronicle">`,
@@ -576,6 +586,7 @@ function injectIconsAndManifest(html, route) {
     `        <link rel="icon" type="image/png" sizes="48x48" href="${prefix}favicon-48x48.png">`,
     `        <link rel="apple-touch-icon" href="${prefix}apple-touch-icon.png">`,
     `        <link rel="manifest" href="${prefix}site.webmanifest">`,
+    ...(adsenseScript ? [adsenseScript] : []),
   ].join("\n");
 
   html = html
@@ -583,7 +594,8 @@ function injectIconsAndManifest(html, route) {
     .replace(/\s*<meta name="application-name" content="[^"]*">\n?/g, "")
     .replace(/\s*<link rel="icon"[^>]*>\n?/g, "")
     .replace(/\s*<link rel="apple-touch-icon"[^>]*>\n?/g, "")
-    .replace(/\s*<link rel="manifest"[^>]*>\n?/g, "");
+    .replace(/\s*<link rel="manifest"[^>]*>\n?/g, "")
+    .replace(/\s*<script async src="https:\/\/pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js\?client=[^"]+" crossorigin="anonymous"><\/script>\n?/g, "");
 
   return html.replace(
     /(<meta name="robots" content="index,follow,max-image-preview:large">)/,
