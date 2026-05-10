@@ -786,6 +786,7 @@ function writeSupportFiles() {
   ];
   const zhRoutes = baseRoutes.map((route) => `zh/${route}`);
   const allRoutes = [...baseRoutes, ...zhRoutes];
+  const sitemapRoutes = [...baseRoutes];
 
   fs.writeFileSync(
     path.join(root, "robots.txt"),
@@ -808,7 +809,7 @@ function writeSupportFiles() {
   if (siteUrl) {
     fs.writeFileSync(
       path.join(root, "sitemap.xml"),
-      `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${allRoutes.map((route) => `  <url>\n    <loc>${siteUrl}/${route}</loc>\n  </url>`).join("\n")}\n</urlset>\n`,
+      `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapRoutes.map((route) => `  <url>\n    <loc>${siteUrl}/${route}</loc>\n  </url>`).join("\n")}\n</urlset>\n`,
       "utf8",
     );
   } else if (fs.existsSync(path.join(root, "sitemap.xml"))) {
@@ -853,6 +854,7 @@ function writeSupportFiles() {
     const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
     manifest.pageCount = allRoutes.length;
     manifest.pageRoutes = allRoutes;
+    manifest.sitemapRoutes = sitemapRoutes;
     fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2), "utf8");
   }
 }

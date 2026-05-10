@@ -2,6 +2,28 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 const root = process.cwd();
+const siteConfigPath = path.join(root, "site.config.json");
+const defaultSiteConfig = {
+  contactEmail: "",
+};
+
+let siteConfig = defaultSiteConfig;
+
+try {
+  const parsedSiteConfig = JSON.parse(await fs.readFile(siteConfigPath, "utf8"));
+  siteConfig = {
+    ...defaultSiteConfig,
+    ...parsedSiteConfig,
+  };
+} catch {
+  siteConfig = defaultSiteConfig;
+}
+
+const contactEmail =
+  typeof siteConfig.contactEmail === "string" ? siteConfig.contactEmail.trim() : "";
+const contactLink = contactEmail
+  ? `<a href="mailto:${contactEmail}">${contactEmail}</a>`
+  : `<a href="mailto:contact@example.com">contact@example.com</a>`;
 
 const files = [
   "index.html",
@@ -217,7 +239,7 @@ const replacements = new Map([
   ],
   [
     "If you believe a specific asset or passage should be credited differently, replaced, or removed, send the page URL and the exact material to <a href=\"mailto:contact@example.com\">contact@example.com</a>.",
-    "If you believe a specific image, passage, or reference note should be credited differently, replaced, or removed, send the page URL and the exact material in question to <a href=\"mailto:contact@example.com\">contact@example.com</a>.",
+    `If you believe a specific image, passage, or reference note should be credited differently, replaced, or removed, send the page URL and the exact material in question to ${contactLink}.`,
   ],
   [
     "For a production launch, this page should reflect the final provenance of every non-original image you keep online.",

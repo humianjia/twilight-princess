@@ -279,5 +279,28 @@
     "zh/chapters/chapter-7/index.html",
     "zh/chapters/chapter-8/index.html",
     "zh/chapters/chapter-9/index.html"
+  ],
+  "sitemapRoutes": [
+    "index.html",
+    "chapters/index.html",
+    "reference/index.html",
+    "intro/index.html",
+    "characters/index.html",
+    "epilogue/index.html",
+    "appendix/index.html",
+    "about/index.html",
+    "privacy/index.html",
+    "contact/index.html",
+    "terms/index.html",
+    "copyright/index.html",
+    "chapters/chapter-1/index.html",
+    "chapters/chapter-2/index.html",
+    "chapters/chapter-3/index.html",
+    "chapters/chapter-4/index.html",
+    "chapters/chapter-5/index.html",
+    "chapters/chapter-6/index.html",
+    "chapters/chapter-7/index.html",
+    "chapters/chapter-8/index.html",
+    "chapters/chapter-9/index.html"
   ]
 }

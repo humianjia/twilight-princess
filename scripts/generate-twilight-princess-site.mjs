@@ -462,7 +462,7 @@ const pageShell = ({
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>${pageTitle}</title>
         <meta name="description" content="${escapeHtml(description)}">
-        <meta name="robots" content="index,follow,max-image-preview:large">
+        <meta name="robots" content="${lang === "en" ? "index,follow,max-image-preview:large" : "noindex,follow,max-image-preview:large"}">
         <meta name="theme-color" content="${manifestThemeColor}">
         <meta name="application-name" content="${siteTitle}">
         <link rel="icon" href="${faviconIcoHref}" sizes="any">
@@ -2235,10 +2235,14 @@ const baseRoutes = [
   ...policyPages.map((page) => page.href),
 ];
 const zhBaseRoutes = baseRoutes.map((route) => toLanguagePath(route, "zh"));
-const pageRoutes = [
+const allPageRoutes = [
   ...baseRoutes,
   ...zhBaseRoutes,
   ...archivePages.flatMap((page) => [page.routePath, page.paths.zh]),
+];
+const sitemapRoutes = [
+  ...baseRoutes,
+  ...archivePages.map((page) => page.routePath),
 ];
 
 await fs.writeFile(
@@ -2260,7 +2264,7 @@ if (adsTxtEntries.length > 0) {
 if (absoluteSiteUrl) {
   await fs.writeFile(
     path.join(siteRoot, "sitemap.xml"),
-    sitemapDocument(pageRoutes),
+    sitemapDocument(sitemapRoutes),
     "utf8",
   );
 }
@@ -2300,11 +2304,12 @@ const assetManifest = {
   generatedAt: new Date().toISOString(),
   defaultLanguage: "en",
   alternateLanguageRoot: "zh/",
-  pageCount: pageRoutes.length,
+  pageCount: allPageRoutes.length,
   importedAssetFiles: archive.copiedRefs.map(
     (ref) => `${sourceArchiveAssetPrefix}/${ref}`,
   ),
-  pageRoutes,
+  pageRoutes: allPageRoutes,
+  sitemapRoutes,
 };
 
 await fs.writeFile(
