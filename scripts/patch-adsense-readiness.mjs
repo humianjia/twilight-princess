@@ -117,7 +117,7 @@ const replacements = [
   ],
   [
     "This page is generated from the project source file ",
-    "This guide page is organized as a structured reading edition of the current walkthrough material. Source chapter: ",
+    "This guide page is organized as a cleaned reading edition of the walkthrough material. Chapter reference: ",
   ],
   [
     "这一页由项目内的源文件 ",
@@ -125,7 +125,7 @@ const replacements = [
   ],
   [
     "Images and attachments used inside the article are routed to local project paths under assets/imported/twp.",
-    "Supporting images used inside the article are served from local project paths for stable reading.",
+    "Supporting images used inside the article are served from local project paths to keep the guide readable and self-contained.",
   ],
   [
     "文中用到的图片和附件都走项目本地的 assets/imported/twp 路径。",
@@ -203,13 +203,13 @@ const policyBodies = {
       eyebrow: "Privacy",
       heading: "Privacy Policy",
       lede:
-        "This page explains how the site may handle analytics, advertising, cookies, and direct contact messages after deployment.",
+        "This page explains how Twilight Princess Chronicle handles analytics, cookies, contact messages, and any advertising features that may be enabled on the live site.",
       leftTitle: "Data handling",
       leftHtml:
-        "<p>The site currently operates as a static website. It does not include a custom account system or user dashboard.</p><p>If analytics or advertising products are added later, this page should be updated to disclose the provider, the data collected, and how users can manage consent where required.</p><p>If you contact the site owner by email, your message and email address may be retained only as long as needed to reply or handle the request.</p>",
+        "<p>The site currently operates as a static website. It does not include account registration, user dashboards, or direct public uploads.</p><p>If you contact the site owner by email, your message and email address may be retained only as long as reasonably necessary to reply, follow up, or document the request.</p><p>If analytics or measurement tools are enabled later, this page will be updated to identify the provider, describe the data involved, and explain any applicable visitor controls.</p>",
       rightTitle: "Cookies and advertising",
       rightHtml:
-        "<p>Third-party services such as analytics platforms or advertising networks may use cookies or similar technologies after launch.</p><p>Before enabling personalized ads in a production environment, add a real consent solution, a real publisher identity, and your final domain details to this page.</p>",
+        "<p>Third-party services such as analytics platforms or advertising networks may use cookies or similar technologies if they are enabled on the live site.</p><p>If Google AdSense or another advertising provider is activated, this page will be updated to reflect the active provider, the live domain, and any consent or preference tools offered to visitors where required.</p>",
     },
     contact: {
       title: "Contact | Twilight Princess Chronicle",
@@ -258,7 +258,7 @@ const policyBodies = {
       leftHtml:
         "<p>The Legend of Zelda and Twilight Princess are associated with their respective rightsholders. This site is an independent editorial guide and is not affiliated with or endorsed by Nintendo.</p><p>Referenced game names, character names, and related marks remain the property of their owners.</p>",
       rightTitle: "Requests and corrections",
-      rightHtml: `<p>If you believe a specific asset or passage should be credited differently, replaced, or removed, send the page URL and the exact material to <a href="mailto:${contactEmail}">${contactEmail}</a>.</p><p>For a production launch, this page should reflect the final provenance of every non-original image you keep online.</p>`,
+      rightHtml: `<p>If you believe a specific asset or passage should be credited differently, revised, or removed, send the page URL and the exact material to <a href="mailto:${contactEmail}">${contactEmail}</a>.</p><p>The site owner reviews good-faith attribution and takedown requests and may revise or remove affected material when appropriate.</p>`,
     },
   },
   zh: {
@@ -611,7 +611,7 @@ function stripSourceExposure(html, route) {
     .replace(/<h2>页面概览<\/h2>/g, "<h2>页面概览</h2>")
     .replace(
       /<p>This page is generated from the project source file ([^<]+)<\/p>/g,
-      '<p>Use this guide page as a route-first reading edition of the walkthrough. Source chapter: $1</p>',
+      '<p>Use this guide page as a route-first reading edition of the walkthrough. Chapter reference: $1</p>',
     )
     .replace(
       /<p>Original publish time: [^<]+<\/p>/g,
@@ -625,6 +625,43 @@ function stripSourceExposure(html, route) {
       /<p>原文发布时间：[^<]+<\/p>/g,
       "<p>你可以通过侧边栏保持章节顺序，也可以随时切换中英文版本，对照阅读同一页面。</p>",
     );
+
+  html = html
+    .replace(/Source chapter:/g, "Chapter reference:")
+    .replace(
+      /Supporting images used inside the article are served from local project paths for stable reading\./g,
+      "Supporting images used inside the article are served from local project paths to keep the guide readable and self-contained.",
+    )
+    .replace(
+      /The original imported page used a long screenshot sequence with unstable translated captions\. The local image archive is preserved below as a numbered source gallery, while the main English walkthrough above has been rewritten into cleaner guide prose\./g,
+      "The image sequence below supports the written guide with visual checkpoints from the route.",
+    )
+    .replace(
+      /The preserved screenshot gallery below is best read as a visual closing sequence rather than as a raw dump of archived images\./g,
+      "The screenshot gallery below is best read as a visual closing sequence for the ending.",
+    )
+    .replace(
+      /These local ending screenshots are preserved as a visual timeline of the finale, its farewell, and the return to peace after the last battle\./g,
+      "These ending screenshots work as a visual timeline of the finale, the farewell, and the return to peace after the last battle.",
+    )
+    .replace(
+      /The legacy anchors from the imported archive are intentionally retained so older internal links continue to land on valid sections inside this page\./g,
+      "Existing section anchors are retained so reference links inside the guide continue to land on the intended sections.",
+    )
+    .replace(
+      /The intro page also carried a small local attachment archive\. It is preserved below exactly as a project file rather than translated line by line\./g,
+      "An older supplementary download is listed below for reference.",
+    )
+    .replace(
+      /while the archived Chinese version remains available through the language switch\./g,
+      "while a Chinese companion version remains available through the language switch.",
+    )
+    .replace(/archive screenshot/gi, "guide screenshot")
+    .replace(/Local Screenshot Archive/g, "Screenshot Highlights")
+    .replace(/1 local attachments/gi, "1 download")
+    .replace(/0 local attachments/gi, "0 downloads")
+    .replace(/local attachments/gi, "downloads")
+    .replace(/1 downloads/gi, "1 download");
 
   return html;
 }
