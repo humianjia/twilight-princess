@@ -22,6 +22,31 @@ const translationCachePath = path.join(
   "sources",
   "twp_translation_cache.json",
 );
+const siteConfigPath = path.join(workspaceRoot, "site.config.json");
+
+const defaultSiteConfig = {
+  siteUrl: "",
+  contactEmail: "",
+  shortName: "TP Chronicle",
+  themeColor: "#173227",
+  backgroundColor: "#f3ead8",
+  adsTxtEntries: [],
+};
+
+const loadSiteConfig = async () => {
+  try {
+    const raw = await fs.readFile(siteConfigPath, "utf8");
+    const parsed = JSON.parse(raw);
+    return { ...defaultSiteConfig, ...parsed };
+  } catch (error) {
+    if (error?.code === "ENOENT") {
+      return defaultSiteConfig;
+    }
+    throw error;
+  }
+};
+
+const siteConfig = await loadSiteConfig();
 
 const archive = await loadTwpSourceArchive(workspaceRoot);
 const archivePages = archive.pages;
@@ -219,11 +244,36 @@ const escapeHtml = (value) =>
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
 
-const absoluteSiteUrl = "https://example.com";
-const publicContactEmail = "contact@example.com";
+const normalizeSiteUrl = (value) => {
+  const normalized = typeof value === "string" ? value.trim() : "";
+  return normalized ? normalized.replace(/\/+$/, "") : "";
+};
+
+const absoluteSiteUrl = normalizeSiteUrl(siteConfig.siteUrl);
+const publicContactEmail =
+  typeof siteConfig.contactEmail === "string" ? siteConfig.contactEmail.trim() : "";
+const manifestShortName =
+  typeof siteConfig.shortName === "string" && siteConfig.shortName.trim()
+    ? siteConfig.shortName.trim()
+    : defaultSiteConfig.shortName;
+const manifestThemeColor =
+  typeof siteConfig.themeColor === "string" && siteConfig.themeColor.trim()
+    ? siteConfig.themeColor.trim()
+    : defaultSiteConfig.themeColor;
+const manifestBackgroundColor =
+  typeof siteConfig.backgroundColor === "string" && siteConfig.backgroundColor.trim()
+    ? siteConfig.backgroundColor.trim()
+    : defaultSiteConfig.backgroundColor;
+const adsTxtEntries = Array.isArray(siteConfig.adsTxtEntries)
+  ? siteConfig.adsTxtEntries
+      .map((entry) => (typeof entry === "string" ? entry.trim() : ""))
+      .filter(Boolean)
+  : [];
 
 const withSiteUrl = (routePath, lang) =>
-  `${absoluteSiteUrl}/${toLanguagePath(routePath, lang).replace(/\\/g, "/")}`;
+  absoluteSiteUrl
+    ? `${absoluteSiteUrl}/${toLanguagePath(routePath, lang).replace(/\\/g, "/")}`
+    : null;
 
 const footerPolicyLinks = (lang, currentPath) =>
   policyPages
@@ -384,15 +434,26 @@ const pageShell = ({
       ? sourceArchiveMeta.englishTagline
       : sourceArchiveMeta.chineseTagline;
   const rootStyle = relativeUrl(toLanguagePath(currentPath, lang), "assets/styles.css");
+  const faviconSvgHref = relativeUrl(toLanguagePath(currentPath, lang), "favicon.svg");
+  const faviconIcoHref = relativeUrl(toLanguagePath(currentPath, lang), "favicon.ico");
+  const favicon32Href = relativeUrl(toLanguagePath(currentPath, lang), "favicon-32x32.png");
+  const favicon48Href = relativeUrl(toLanguagePath(currentPath, lang), "favicon-48x48.png");
+  const appleTouchHref = relativeUrl(
+    toLanguagePath(currentPath, lang),
+    "apple-touch-icon.png",
+  );
+  const manifestHref = relativeUrl(toLanguagePath(currentPath, lang), "site.webmanifest");
   const homeHref = relativeUrl(
     toLanguagePath(currentPath, lang),
     toLanguagePath("index.html", lang),
   );
   const canonicalHref = withSiteUrl(currentPath, lang);
-  const alternateHref =
-    lang === "en"
+  const alternateHref = absoluteSiteUrl
+    ? lang === "en"
       ? withSiteUrl(currentPath, "zh")
-      : withSiteUrl(currentPath, "en");
+      : withSiteUrl(currentPath, "en")
+    : null;
+  const xDefaultHref = absoluteSiteUrl ? withSiteUrl("index.html", "en") : null;
 
   return html`<!doctype html>
     <html lang="${lang === "en" ? "en" : "zh-CN"}">
@@ -402,10 +463,18 @@ const pageShell = ({
         <title>${pageTitle}</title>
         <meta name="description" content="${escapeHtml(description)}">
         <meta name="robots" content="index,follow,max-image-preview:large">
-        <link rel="canonical" href="${canonicalHref}">
-        <link rel="alternate" hreflang="${lang === "en" ? "zh-CN" : "en"}" href="${alternateHref}">
-        <link rel="alternate" hreflang="${lang === "en" ? "en" : "zh-CN"}" href="${canonicalHref}">
-        <link rel="alternate" hreflang="x-default" href="${withSiteUrl("index.html", "en")}">
+        <meta name="theme-color" content="${manifestThemeColor}">
+        <meta name="application-name" content="${siteTitle}">
+        <link rel="icon" href="${faviconIcoHref}" sizes="any">
+        <link rel="icon" type="image/svg+xml" href="${faviconSvgHref}">
+        <link rel="icon" type="image/png" sizes="32x32" href="${favicon32Href}">
+        <link rel="icon" type="image/png" sizes="48x48" href="${favicon48Href}">
+        <link rel="apple-touch-icon" href="${appleTouchHref}">
+        <link rel="manifest" href="${manifestHref}">
+        ${canonicalHref ? `<link rel="canonical" href="${canonicalHref}">` : ""}
+        ${alternateHref ? `<link rel="alternate" hreflang="${lang === "en" ? "zh-CN" : "en"}" href="${alternateHref}">` : ""}
+        ${canonicalHref ? `<link rel="alternate" hreflang="${lang === "en" ? "en" : "zh-CN"}" href="${canonicalHref}">` : ""}
+        ${xDefaultHref ? `<link rel="alternate" hreflang="x-default" href="${xDefaultHref}">` : ""}
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Shippori+Mincho:wght@400;500;700&family=Yuji+Syuku&display=swap" rel="stylesheet">
@@ -429,12 +498,14 @@ const pageShell = ({
           ${content}
           <footer class="site-footer">
             <p>${lang === "en"
-              ? "Twilight Princess Chronicle is a fan-made bilingual guide with chapter walkthroughs, reference material, and locally hosted screenshots for easier reading."
-              : "Twilight Princess Chronicle \u662f\u4e00\u4e2a\u975e\u5b98\u65b9\u7684\u4e2d\u82f1\u53cc\u8bed\u653b\u7565\u7ad9\uff0c\u63d0\u4f9b\u7ae0\u8282\u6d41\u7a0b\u3001\u53c2\u8003\u8d44\u6599\u4e0e\u9605\u8bfb\u6240\u9700\u7684\u672c\u5730\u56fe\u7247\u3002"}</p>
+              ? "Twilight Princess Chronicle is an editorial guide with chapter walkthroughs, strategy notes, and reference pages for easier reading."
+              : "Twilight Princess Chronicle 是一个中英双语攻略站，提供章节流程、路线提示与参考资料，方便连续阅读与查阅。"}</p>
             <div class="footer-links">${footerPolicyLinks(lang, currentPath)}</div>
-            <p>${lang === "en"
-              ? `Contact: <a href="mailto:${publicContactEmail}">${publicContactEmail}</a>`
-              : `\u8054\u7cfb\u90ae\u7bb1\uff1a<a href="mailto:${publicContactEmail}">${publicContactEmail}</a>`}</p>
+            ${publicContactEmail
+              ? `<p>${lang === "en"
+                ? `Contact: <a href="mailto:${publicContactEmail}">${publicContactEmail}</a>`
+                : `联系邮箱：<a href="mailto:${publicContactEmail}">${publicContactEmail}</a>`}</p>`
+              : ""}
           </footer>
         </div>
       </body>
@@ -586,7 +657,7 @@ const renderHomePage = (lang, grouped, pageContentBySlug) => {
     <main>
       <section class="hero hero-home">
         <div class="hero-copy">
-          <p class="eyebrow">${lang === "en" ? "English Guide" : "\u4e2d\u82f1\u53cc\u8bed\u955c\u50cf\u7248"}</p>
+          <p class="eyebrow">${lang === "en" ? "English Guide" : "双语攻略"}</p>
           <h1>${lang === "en" ? sourceArchiveMeta.englishTitle : sourceArchiveMeta.chineseTitle}</h1>
           <p class="lede">${lang === "en" ? sourceArchiveMeta.englishDescription : sourceArchiveMeta.chineseDescription}</p>
           <div class="hero-actions">
@@ -609,10 +680,10 @@ const renderHomePage = (lang, grouped, pageContentBySlug) => {
       </section>
       <section class="content-grid intro-grid">
         <article class="panel prose">
-          <h2>${lang === "en" ? "What This Site Covers" : "\u8fd9\u4e2a\u7248\u672c\u4fdd\u7559\u4e86\u4ec0\u4e48"}</h2>
+          <h2>${lang === "en" ? "What This Site Covers" : "这个站点提供什么"}</h2>
           <p>${lang === "en"
-            ? "This version focuses on a clean English reading experience built from the current project archive. The goal is not to mirror every original sentence, but to turn the collected material into a more readable walkthrough site with stable navigation and preserved local media."
-            : "\u73b0\u5728\u53ea\u4fdd\u7559\u4f60\u76ee\u524d\u8fd9\u5957 Twilight Princess \u653b\u7565\u7ed3\u6784\uff0c\u628a\u5404\u7c7b\u9875\u9762\u6574\u7406\u6210\u66f4\u6e05\u6670\u7684\u4e2d\u82f1\u53cc\u8bed\u653b\u7565\u7ad9\uff0c\u540c\u65f6\u4fdd\u7559\u56fe\u6587\u9605\u8bfb\u7684\u4e3b\u8981\u4f53\u9a8c\u3002"}</p>
+            ? "This edition focuses on readable walkthrough prose, stable navigation, and bilingual browsing. The goal is to make the main route, side references, and planning notes easier to use across the full campaign."
+            : "这个版本更强调清晰的攻略文字、稳定的站内导航和中英双语切换，让主线流程、补充资料与路线提示都更方便查阅。"}</p>
           <p>${lang === "en"
             ? "English is the default at the site root, and every page can switch directly to its Chinese counterpart under /zh/."
             : "\u6839\u76ee\u5f55\u9ed8\u8ba4\u5c55\u793a\u82f1\u6587\uff0c\u6bcf\u4e00\u9875\u90fd\u53ef\u4ee5\u76f4\u63a5\u5207\u6362\u5230 /zh/ \u4e0b\u7684\u4e2d\u6587\u7248\u672c\u3002"}</p>
@@ -627,11 +698,11 @@ const renderHomePage = (lang, grouped, pageContentBySlug) => {
               ? `${references.length} supporting reference pages`
               : `${references.length} \u4e2a\u8d44\u6599\u4e0e\u9644\u5f55\u9875`,
             lang === "en"
-              ? `${archive.copiedRefs.length} locally hosted assets`
-              : `${archive.copiedRefs.length} \u4e2a\u672c\u5730\u590d\u5236\u8d44\u6e90`,
+              ? `${archive.copiedRefs.length} supporting media items`
+              : `${archive.copiedRefs.length} 个配套图像与媒体资源`,
             lang === "en"
-              ? "English root site with mirrored Chinese routes"
-              : "\u82f1\u6587\u6839\u76ee\u5f55 + \u4e2d\u6587 zh \u8def\u7531",
+              ? "English root site plus Chinese companion routes"
+              : "英文根目录 + 中文 zh 对应路由",
           ])}
         </article>
       </section>
@@ -761,7 +832,32 @@ const renderDetailPage = (lang, page, pageContentBySlug, grouped) => {
   const pageIndex = groupedPages.findIndex((entry) => entry.slug === page.slug);
   const prev = groupedPages[pageIndex - 1];
   const next = groupedPages[pageIndex + 1];
-  const mirrorHref = relativeUrl(currentLanguagePath, path.relative(siteRoot, page.sourcePath));
+  const visualRefCount = page.localRefs.filter((ref) => ref.startsWith("images/")).length;
+  const secondaryAction = next
+    ? {
+        href: relativeUrl(currentLanguagePath, toLanguagePath(next.routePath, lang)),
+        label:
+          lang === "en"
+            ? page.section === "chapter"
+              ? "Next chapter"
+              : "Next page"
+            : page.section === "chapter"
+              ? "下一章"
+              : "下一页",
+      }
+    : prev
+      ? {
+          href: relativeUrl(currentLanguagePath, toLanguagePath(prev.routePath, lang)),
+          label:
+            lang === "en"
+              ? page.section === "chapter"
+                ? "Previous chapter"
+                : "Previous page"
+              : page.section === "chapter"
+                ? "上一章"
+                : "上一页",
+        }
+      : null;
 
   const body = html`
     <main>
@@ -784,7 +880,9 @@ const renderDetailPage = (lang, page, pageContentBySlug, grouped) => {
               : page.section === "chapter"
                 ? "\u67e5\u770b\u5168\u90e8\u7ae0\u8282"
                 : "\u67e5\u770b\u5168\u90e8\u8d44\u6599\u9875"}</a>
-            <a class="button button-secondary" href="${mirrorHref}">${lang === "en" ? "View source file" : "\u6253\u5f00\u6e90\u9875\u6587\u4ef6"}</a>
+            ${secondaryAction
+              ? `<a class="button button-secondary" href="${secondaryAction.href}">${secondaryAction.label}</a>`
+              : ""}
           </div>
         </div>
         <div class="hero-art hero-source-art">
@@ -793,30 +891,41 @@ const renderDetailPage = (lang, page, pageContentBySlug, grouped) => {
       </section>
       <section class="content-grid">
         <article class="panel prose">
-          <h2>${lang === "en" ? "Source Notes" : "\u9875\u9762\u8bf4\u660e"}</h2>
+          <h2>${lang === "en" ? "Reading Guide" : "阅读建议"}</h2>
           <p>${lang === "en"
-            ? `This page is generated from the project source file ${page.sourceFile}. Images and attachments used inside the article are routed to local project paths under ${sourceArchiveAssetPrefix}.`
-            : `\u8fd9\u4e00\u9875\u7531\u9879\u76ee\u5185\u7684\u6e90\u6587\u4ef6 ${page.sourceFile} \u751f\u6210\u3002\u6587\u4e2d\u7528\u5230\u7684\u56fe\u7247\u548c\u9644\u4ef6\u90fd\u8d70\u9879\u76ee\u672c\u5730\u7684 ${sourceArchiveAssetPrefix} \u8def\u5f84\u3002`}</p>
+            ? page.section === "chapter"
+              ? "Use this page as a route-first guide: start with the overview, then scan later sections for dungeon reminders, key item checks, and optional cleanup notes."
+              : "Use this page as a compact reference entry. Read straight through for context, or jump by section when you only need a quick reminder."
+            : page.section === "chapter"
+              ? "这页更适合按流程阅读：先看概要，再根据后面的段落回查迷宫提醒、关键道具和可选补完提示。"
+              : "这页适合作为快速参考资料使用。你可以顺着看完整篇，也可以按标题跳到需要的部分。"}</p>
           <p>${lang === "en"
-            ? `Original publish time: ${page.publishedAt || "Unknown"}.`
-            : `\u539f\u6587\u53d1\u5e03\u65f6\u95f4\uff1a${page.publishedAt || "\u672a\u77e5"}\u3002`}</p>
+            ? "Use the sidebar to keep your place in the series order, and switch languages at any time if you want the paired Chinese or English version."
+            : "你可以通过侧边栏保持章节顺序，也可以随时切换中英文版本，对照阅读同一页面。"}</p>
         </article>
         <article class="panel keyline">
-          <h2>${lang === "en" ? "Source Snapshot" : "\u9875\u9762\u6982\u89c8"}</h2>
+          <h2>${lang === "en" ? "Page Snapshot" : "页面概览"}</h2>
           ${listItems([
             lang === "en"
-              ? `${page.localRefs.filter((ref) => ref.startsWith("images/")).length} local images`
-              : `${page.localRefs.filter((ref) => ref.startsWith("images/")).length} \u5f20\u672c\u5730\u56fe\u7247`,
+              ? page.section === "chapter"
+                ? `Chapter ${pageIndex + 1} of ${groupedPages.length} in the main walkthrough`
+                : `Reference page ${pageIndex + 1} of ${groupedPages.length}`
+              : page.section === "chapter"
+                ? `主线流程第 ${pageIndex + 1} / ${groupedPages.length} 页`
+                : `参考资料第 ${pageIndex + 1} / ${groupedPages.length} 页`,
             lang === "en"
-                ? `${page.localRefs.filter((ref) => ref.startsWith("assets/")).length} local attachments`
-                : `${page.localRefs.filter((ref) => ref.startsWith("assets/")).length} \u4e2a\u672c\u5730\u9644\u4ef6`,
+              ? `${visualRefCount} visual reference images`
+              : `${visualRefCount} 张配套参考图片`,
             lang === "en"
               ? page.rawTocHtml
-                ? "Includes an in-page contents list"
-                : "No in-page contents list"
+                ? "Includes a section contents list"
+                : "Continuous reading flow"
               : page.rawTocHtml
-                ? "\u5305\u542b\u9875\u5185\u76ee\u5f55"
-                : "\u4e0d\u542b\u9875\u5185\u76ee\u5f55",
+                ? "包含页内目录"
+                : "连续阅读版式",
+            lang === "en"
+              ? "Paired Chinese or English version available"
+              : "可切换对应的中英文版本",
           ])}
         </article>
       </section>
@@ -1115,7 +1224,7 @@ const renderPolicyPage = (lang, page) => {
             <div class="hero-copy">
               <p class="eyebrow">Rights</p>
               <h1>Copyright and Attribution</h1>
-              <p class="lede">This page explains how Twilight Princess Chronicle handles ownership notices, attribution, and requests related to imported game material and screenshots.</p>
+              <p class="lede">This page explains how Twilight Princess Chronicle handles ownership notices, attribution, and review requests for game-related references and supporting media.</p>
             </div>
             <div class="hero-art policy-art">
               <div class="policy-mark">C</div>
@@ -1124,13 +1233,13 @@ const renderPolicyPage = (lang, page) => {
           <section class="content-grid">
             <article class="panel prose">
               <h2>Ownership Notice</h2>
-              <p>The Legend of Zelda, Twilight Princess, related character names, and associated marks remain the property of their respective rightsholders. Twilight Princess Chronicle is an unofficial fan guide and is not affiliated with or endorsed by Nintendo.</p>
-              <p>Where the site references game material, screenshots, or imported archival elements, ownership of the underlying original material remains with the relevant rightsholder unless otherwise stated.</p>
+              <p>The Legend of Zelda, Twilight Princess, related character names, and associated marks remain the property of their respective rightsholders.</p>
+              <p>Original site writing, layout, and editorial notes created for this project remain protected by their respective authors unless otherwise stated.</p>
             </article>
             <article class="panel keyline">
               <h2>Attribution Requests</h2>
-              <p>If you believe a specific image, passage, or reference note should be credited differently, replaced, or removed, send the page URL and the exact material in question to <a href="mailto:${publicContactEmail}">${publicContactEmail}</a>.</p>
-              <p>Before a full production launch, this page should reflect the final provenance and attribution approach for any non-original media that remains published on the live site.</p>
+              <p>This site is an independent editorial guide and is not affiliated with or endorsed by Nintendo.</p>
+              <p>If you believe a specific image, passage, or reference note should be credited differently, revised, or removed, send the page URL and the exact material in question to <a href="mailto:${publicContactEmail}">${publicContactEmail}</a>.</p>
             </article>
           </section>
         </main>
@@ -2078,6 +2187,7 @@ await removeIfExists(path.join(siteRoot, "asset-manifest.json"));
 await removeIfExists(path.join(siteRoot, "robots.txt"));
 await removeIfExists(path.join(siteRoot, "ads.txt"));
 await removeIfExists(path.join(siteRoot, "sitemap.xml"));
+await removeIfExists(path.join(siteRoot, "site.webmanifest"));
 
 await ensureDir(assetRoot);
 await fs.writeFile(path.join(assetRoot, "styles.css"), css, "utf8");
@@ -2133,17 +2243,56 @@ const pageRoutes = [
 
 await fs.writeFile(
   path.join(siteRoot, "robots.txt"),
-  `User-agent: *\nAllow: /\n\nSitemap: ${absoluteSiteUrl}/sitemap.xml\n`,
+  `${[
+    "User-agent: *",
+    "Allow: /",
+    ...(absoluteSiteUrl ? ["", `Sitemap: ${absoluteSiteUrl}/sitemap.xml`] : []),
+  ].join("\n")}\n`,
   "utf8",
 );
+if (adsTxtEntries.length > 0) {
+  await fs.writeFile(
+    path.join(siteRoot, "ads.txt"),
+    `${adsTxtEntries.join("\n")}\n`,
+    "utf8",
+  );
+}
+if (absoluteSiteUrl) {
+  await fs.writeFile(
+    path.join(siteRoot, "sitemap.xml"),
+    sitemapDocument(pageRoutes),
+    "utf8",
+  );
+}
+const webManifest = {
+  name: sourceArchiveMeta.englishTitle,
+  short_name: manifestShortName,
+  description: sourceArchiveMeta.englishDescription,
+  lang: "en",
+  start_url: "/",
+  scope: "/",
+  display: "standalone",
+  theme_color: manifestThemeColor,
+  background_color: manifestBackgroundColor,
+  icons: [
+    {
+      src: "android-chrome-192x192.png",
+      sizes: "192x192",
+      type: "image/png",
+    },
+    {
+      src: "android-chrome-512x512.png",
+      sizes: "512x512",
+      type: "image/png",
+    },
+  ],
+};
+if (absoluteSiteUrl) {
+  webManifest.id = `${absoluteSiteUrl}/`;
+}
 await fs.writeFile(
-  path.join(siteRoot, "ads.txt"),
-  "# Replace this placeholder with your real advertising seller declaration before applying for AdSense.\n",
-  "utf8",
-);
-await fs.writeFile(
-  path.join(siteRoot, "sitemap.xml"),
-  sitemapDocument(pageRoutes),
+  path.join(siteRoot, "site.webmanifest"),
+  `${JSON.stringify(webManifest, null, 2)}\n`,
   "utf8",
 );
 

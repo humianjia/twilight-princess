@@ -2,8 +2,41 @@ import fs from "node:fs";
 import path from "node:path";
 
 const root = process.cwd();
-const siteUrl = "https://example.com";
-const contactEmail = "contact@example.com";
+const siteConfigPath = path.join(root, "site.config.json");
+const defaultSiteConfig = {
+  siteUrl: "",
+  contactEmail: "",
+  shortName: "TP Chronicle",
+  themeColor: "#173227",
+  backgroundColor: "#f3ead8",
+  adsTxtEntries: [],
+};
+const siteConfig = fs.existsSync(siteConfigPath)
+  ? { ...defaultSiteConfig, ...JSON.parse(fs.readFileSync(siteConfigPath, "utf8")) }
+  : defaultSiteConfig;
+const siteUrl =
+  typeof siteConfig.siteUrl === "string" && siteConfig.siteUrl.trim()
+    ? siteConfig.siteUrl.trim().replace(/\/+$/, "")
+    : "";
+const contactEmail =
+  typeof siteConfig.contactEmail === "string" ? siteConfig.contactEmail.trim() : "";
+const shortName =
+  typeof siteConfig.shortName === "string" && siteConfig.shortName.trim()
+    ? siteConfig.shortName.trim()
+    : defaultSiteConfig.shortName;
+const themeColor =
+  typeof siteConfig.themeColor === "string" && siteConfig.themeColor.trim()
+    ? siteConfig.themeColor.trim()
+    : defaultSiteConfig.themeColor;
+const backgroundColor =
+  typeof siteConfig.backgroundColor === "string" && siteConfig.backgroundColor.trim()
+    ? siteConfig.backgroundColor.trim()
+    : defaultSiteConfig.backgroundColor;
+const adsTxtEntries = Array.isArray(siteConfig.adsTxtEntries)
+  ? siteConfig.adsTxtEntries
+      .map((entry) => (typeof entry === "string" ? entry.trim() : ""))
+      .filter(Boolean)
+  : [];
 
 const policyPages = [
   { slug: "about", titleEn: "About This Site", titleZh: "关于本站" },
@@ -60,11 +93,11 @@ const replacements = [
   ],
   [
     "Open mirrored source",
-    "Open source file",
+    "Continue reading",
   ],
   [
     "打开原镜像页",
-    "打开源页文件",
+    "继续阅读",
   ],
   [
     "This bilingual build keeps the mirror order intact so you can move through the collected Twilight Princess material in a stable sequence.",
@@ -73,6 +106,62 @@ const replacements = [
   [
     "这套双语站保持了镜像页面的先后顺序，便于你按稳定顺序阅读 Twilight Princess 资料。",
     "这套双语站保持稳定的阅读顺序，便于你按一致的节奏浏览 Twilight Princess 相关内容。",
+  ],
+  [
+    "Twilight Princess Chronicle is a fan-made bilingual guide site with chapter walkthroughs, reference pages, and locally hosted media needed for reading.",
+    "Twilight Princess Chronicle is an editorial guide site with chapter walkthroughs, strategy notes, and reference pages for easier reading.",
+  ],
+  [
+    "Twilight Princess Chronicle 是一个非官方的中英双语攻略站，提供章节流程、参考资料与阅读所需的本地图片。",
+    "Twilight Princess Chronicle 是一个中英双语攻略站，提供章节流程、路线提示与参考资料，方便连续阅读与查阅。",
+  ],
+  [
+    "This page is generated from the project source file ",
+    "This guide page is organized as a structured reading edition of the current walkthrough material. Source chapter: ",
+  ],
+  [
+    "这一页由项目内的源文件 ",
+    "这一页整理为更适合连续阅读的攻略版本。对应章节源文件：",
+  ],
+  [
+    "Images and attachments used inside the article are routed to local project paths under assets/imported/twp.",
+    "Supporting images used inside the article are served from local project paths for stable reading.",
+  ],
+  [
+    "文中用到的图片和附件都走项目本地的 assets/imported/twp 路径。",
+    "文中配套图片会通过站内本地路径提供，便于稳定阅读。",
+  ],
+  [
+    "An English-first fan guide with a switchable Chinese edition.",
+    "An English-first editorial guide with a switchable Chinese edition.",
+  ],
+  [
+    "A polished Twilight Princess walkthrough with story chapters, reference guides, and locally hosted screenshots.",
+    "An editorial Twilight Princess guide with chapter walkthroughs, strategy notes, and reference pages.",
+  ],
+  [
+    "This version focuses on a clean English reading experience built from the current project archive. The goal is not to mirror every original sentence, but to turn the collected material into a more readable walkthrough site with stable navigation and preserved local media.",
+    "This edition focuses on readable walkthrough prose, stable navigation, and bilingual browsing. The goal is to make the main route, side references, and planning notes easier to use across the full campaign.",
+  ],
+  [
+    "231 locally hosted assets",
+    "231 supporting media items",
+  ],
+  [
+    "English root site with mirrored Chinese routes",
+    "English root site plus Chinese companion routes",
+  ],
+  [
+    "Terms governing the use of this fan guide, its content, and outbound links.",
+    "Terms governing the use of this editorial guide, its content, and outbound links.",
+  ],
+  [
+    "This site is maintained as a fan guide project. The goal is to present game information in a readable structure, make navigation easier, and improve page quality over time.",
+    "This site is maintained as an editorial guide project. The goal is to present game information in a readable structure, make navigation easier, and improve page quality over time.",
+  ],
+  [
+    "The Legend of Zelda and Twilight Princess are associated with their respective rightsholders. This site is an unofficial fan guide and is not affiliated with or endorsed by Nintendo.",
+    "The Legend of Zelda and Twilight Princess are associated with their respective rightsholders. This site is an independent editorial guide and is not affiliated with or endorsed by Nintendo.",
   ],
 ];
 
@@ -103,7 +192,7 @@ const policyBodies = {
         '<ul class="bullet-list"><li>Chapter-by-chapter story guidance and reference pages.</li><li>English-first navigation with direct Chinese-language counterparts.</li><li>Local hosting for the media assets currently used by the pages.</li><li>Ongoing cleanup for clarity, consistency, and terminology.</li></ul>',
       rightTitle: "Editorial approach",
       rightHtml:
-        "<p>This site is maintained as a fan guide project. The goal is to present game information in a readable structure, make navigation easier, and improve page quality over time.</p><p>When material needs correction, replacement, or attribution updates, the site owner can revise or remove it.</p>",
+        "<p>This site is maintained as an editorial guide project. The goal is to present game information in a readable structure, make navigation easier, and improve page quality over time.</p><p>When material needs correction, replacement, or attribution updates, the site owner can revise or remove it.</p>",
     },
     privacy: {
       title: "Privacy Policy | Twilight Princess Chronicle",
@@ -141,7 +230,7 @@ const policyBodies = {
     terms: {
       title: "Terms of Use | Twilight Princess Chronicle",
       description:
-        "Terms governing the use of this fan guide, its content, and outbound links.",
+        "Terms governing the use of this editorial guide, its content, and outbound links.",
       navKey: null,
       mark: "T",
       eyebrow: "Terms",
@@ -167,7 +256,7 @@ const policyBodies = {
         "This page explains how the site treats game-related material, screenshots, and attribution requests.",
       leftTitle: "Ownership notice",
       leftHtml:
-        "<p>The Legend of Zelda and Twilight Princess are associated with their respective rightsholders. This site is an unofficial fan guide and is not affiliated with or endorsed by Nintendo.</p><p>Referenced game names, character names, and related marks remain the property of their owners.</p>",
+        "<p>The Legend of Zelda and Twilight Princess are associated with their respective rightsholders. This site is an independent editorial guide and is not affiliated with or endorsed by Nintendo.</p><p>Referenced game names, character names, and related marks remain the property of their owners.</p>",
       rightTitle: "Requests and corrections",
       rightHtml: `<p>If you believe a specific asset or passage should be credited differently, replaced, or removed, send the page URL and the exact material to <a href="mailto:${contactEmail}">${contactEmail}</a>.</p><p>For a production launch, this page should reflect the final provenance of every non-original image you keep online.</p>`,
     },
@@ -374,16 +463,17 @@ function footerMarkup(file, route) {
     .join("");
   const description =
     lang === "en"
-      ? "Twilight Princess Chronicle is a fan-made bilingual guide site with chapter walkthroughs, reference pages, and locally hosted media needed for reading."
-      : "Twilight Princess Chronicle 是一个非官方的中英双语攻略站，提供章节流程、参考资料与阅读所需的本地图片。";
-  const contactLine =
-    lang === "en"
+      ? "Twilight Princess Chronicle is an editorial guide site with chapter walkthroughs, strategy notes, and reference pages for easier reading."
+      : "Twilight Princess Chronicle 是一个中英双语攻略站，提供章节流程、路线提示与参考资料，方便连续阅读与查阅。";
+  const contactLine = contactEmail
+    ? lang === "en"
       ? `Contact: <a href="mailto:${contactEmail}">${contactEmail}</a>`
-      : `联系邮箱：<a href="mailto:${contactEmail}">${contactEmail}</a>`;
+      : `联系邮箱：<a href="mailto:${contactEmail}">${contactEmail}</a>`
+    : "";
   return `<footer class="site-footer">
             <p>${description}</p>
             <div class="footer-links">${links}</div>
-            <p>${contactLine}</p>
+            ${contactLine ? `<p>${contactLine}</p>` : ""}
           </footer>`;
 }
 
@@ -397,9 +487,38 @@ function injectMetaRobots(html) {
   );
 }
 
+function rewriteRobotsForRoute(html, route) {
+  const robotsContent = isZhRoute(route)
+    ? "noindex,follow,max-image-preview:large"
+    : "index,follow,max-image-preview:large";
+  if (html.includes('name="robots"')) {
+    return html.replace(
+      /<meta name="robots" content="[^"]*">/i,
+      `<meta name="robots" content="${robotsContent}">`,
+    );
+  }
+  return html.replace(
+    /(<meta name="description" content="[^"]*">)/,
+    `<meta name="robots" content="${robotsContent}">$1`,
+  );
+}
+
 function injectCanonicalLinks(html, route) {
+  if (!siteUrl) {
+    return html
+      .replace(/\s*<link rel="canonical" href="[^"]*">\n?/g, "")
+      .replace(/\s*<link rel="alternate" hreflang="[^"]*" href="[^"]*">\n?/g, "");
+  }
   if (html.includes('rel="canonical"')) {
-    return html;
+    const canonical = `${siteUrl}/${route}`;
+    const alternate = `${siteUrl}/${counterpartRoute(route)}`;
+    const lang = currentLanguage(route);
+    return html
+      .replace(/<link rel="canonical" href="[^"]*">/, `<link rel="canonical" href="${canonical}">`)
+      .replace(
+        /<link rel="alternate" hreflang="[^"]*" href="[^"]*">\n?\s*<link rel="alternate" hreflang="[^"]*" href="[^"]*">\n?\s*<link rel="alternate" hreflang="x-default" href="[^"]*">/,
+        `<link rel="alternate" hreflang="${lang === "en" ? "zh-CN" : "en"}" href="${alternate}">\n        <link rel="alternate" hreflang="${lang === "en" ? "en" : "zh-CN"}" href="${canonical}">\n        <link rel="alternate" hreflang="x-default" href="${siteUrl}/index.html">`,
+      );
   }
   const canonical = `${siteUrl}/${route}`;
   const alternate = `${siteUrl}/${counterpartRoute(route)}`;
@@ -438,6 +557,78 @@ function patchPageNotes(html) {
     );
 }
 
+function injectIconsAndManifest(html, route) {
+  const depth = route.split("/").length - 1;
+  const prefix = depth === 0 ? "" : "../".repeat(depth);
+  const iconBlock = [
+    `        <meta name="theme-color" content="${themeColor}">`,
+    `        <meta name="application-name" content="Twilight Princess Chronicle">`,
+    `        <link rel="icon" href="${prefix}favicon.ico" sizes="any">`,
+    `        <link rel="icon" type="image/svg+xml" href="${prefix}favicon.svg">`,
+    `        <link rel="icon" type="image/png" sizes="32x32" href="${prefix}favicon-32x32.png">`,
+    `        <link rel="icon" type="image/png" sizes="48x48" href="${prefix}favicon-48x48.png">`,
+    `        <link rel="apple-touch-icon" href="${prefix}apple-touch-icon.png">`,
+    `        <link rel="manifest" href="${prefix}site.webmanifest">`,
+  ].join("\n");
+
+  html = html
+    .replace(/\s*<meta name="theme-color" content="[^"]*">\n?/g, "")
+    .replace(/\s*<meta name="application-name" content="[^"]*">\n?/g, "")
+    .replace(/\s*<link rel="icon"[^>]*>\n?/g, "")
+    .replace(/\s*<link rel="apple-touch-icon"[^>]*>\n?/g, "")
+    .replace(/\s*<link rel="manifest"[^>]*>\n?/g, "");
+
+  return html.replace(
+    /(<meta name="robots" content="index,follow,max-image-preview:large">)/,
+    `$1\n${iconBlock}`,
+  );
+}
+
+function stripSourceExposure(html, route) {
+  const lang = currentLanguage(route);
+  const continueHref = (() => {
+    if (route.includes("chapter-")) {
+      if (route.includes("chapter-9")) {
+        return "../index.html";
+      }
+      return route.match(/^zh\//)
+        ? `../chapter-${Number(route.match(/chapter-(\d+)/)?.[1] || 0) + 1}/index.html`
+        : `../chapter-${Number(route.match(/chapter-(\d+)/)?.[1] || 0) + 1}/index.html`;
+    }
+    return route.startsWith("zh/") ? "../index.html" : "../index.html";
+  })();
+  html = html.replace(
+    /<a class="button button-secondary" href="[^"]*sources\/[^"]*">[^<]*<\/a>/g,
+    lang === "en"
+      ? `<a class="button button-secondary" href="${continueHref}">Continue reading</a>`
+      : `<a class="button button-secondary" href="${continueHref}">继续阅读</a>`,
+  );
+
+  html = html
+    .replace(/<h2>Source Notes<\/h2>/g, "<h2>Reading Guide</h2>")
+    .replace(/<h2>Source Snapshot<\/h2>/g, "<h2>Page Snapshot</h2>")
+    .replace(/<h2>页面说明<\/h2>/g, "<h2>阅读建议</h2>")
+    .replace(/<h2>页面概览<\/h2>/g, "<h2>页面概览</h2>")
+    .replace(
+      /<p>This page is generated from the project source file ([^<]+)<\/p>/g,
+      '<p>Use this guide page as a route-first reading edition of the walkthrough. Source chapter: $1</p>',
+    )
+    .replace(
+      /<p>Original publish time: [^<]+<\/p>/g,
+      "<p>Use the sidebar to keep your place in the series order, and switch languages at any time if you want the paired Chinese or English version.</p>",
+    )
+    .replace(
+      /<p>这一页由项目内的源文件 ([^<]+)<\/p>/g,
+      "<p>这页整理为更适合连续阅读的攻略版本。对应章节源文件：$1</p>",
+    )
+    .replace(
+      /<p>原文发布时间：[^<]+<\/p>/g,
+      "<p>你可以通过侧边栏保持章节顺序，也可以随时切换中英文版本，对照阅读同一页面。</p>",
+    );
+
+  return html;
+}
+
 function replaceAllPairs(html) {
   let next = html;
   for (const [from, to] of replacements) {
@@ -451,9 +642,12 @@ function patchExistingPage(file) {
   let html = fs.readFileSync(file, "utf8");
 
   html = injectMetaRobots(html);
+  html = rewriteRobotsForRoute(html, route);
   html = injectCanonicalLinks(html, route);
+  html = injectIconsAndManifest(html, route);
   html = replaceAllPairs(html);
   html = patchPageNotes(html);
+  html = stripSourceExposure(html, route);
 
   html = html.replace(
     /<nav class="nav-links">[\s\S]*?<\/nav>/,
@@ -483,8 +677,20 @@ function pageShell({ lang, route, title, description, navKey, body }) {
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>${title}</title>
-        <meta name="robots" content="index,follow,max-image-preview:large">
+        <meta name="robots" content="${lang === "en" ? "index,follow,max-image-preview:large" : "noindex,follow,max-image-preview:large"}">
         <meta name="description" content="${description}">
+        <meta name="theme-color" content="${themeColor}">
+        <meta name="application-name" content="Twilight Princess Chronicle">
+        <link rel="icon" href="${relHref(filePath, "favicon.ico")}" sizes="any">
+        <link rel="icon" type="image/svg+xml" href="${relHref(filePath, "favicon.svg")}">
+        <link rel="icon" type="image/png" sizes="32x32" href="${relHref(filePath, "favicon-32x32.png")}">
+        <link rel="icon" type="image/png" sizes="48x48" href="${relHref(filePath, "favicon-48x48.png")}">
+        <link rel="apple-touch-icon" href="${relHref(filePath, "apple-touch-icon.png")}">
+        <link rel="manifest" href="${relHref(filePath, "site.webmanifest")}">
+        ${siteUrl ? `<link rel="canonical" href="${siteUrl}/${lang === "en" ? route : `zh/${route}`}">` : ""}
+        ${siteUrl ? `<link rel="alternate" hreflang="${lang === "en" ? "zh-CN" : "en"}" href="${siteUrl}/${lang === "en" ? `zh/${route}` : route}">` : ""}
+        ${siteUrl ? `<link rel="alternate" hreflang="${lang === "en" ? "en" : "zh-CN"}" href="${siteUrl}/${lang === "en" ? route : `zh/${route}`}">` : ""}
+        ${siteUrl ? `<link rel="alternate" hreflang="x-default" href="${siteUrl}/index.html">` : ""}
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Shippori+Mincho:wght@400;500;700&family=Yuji+Syuku&display=swap" rel="stylesheet">
@@ -497,7 +703,7 @@ function pageShell({ lang, route, title, description, navKey, body }) {
               <span class="brand-mark">TP</span>
               <span>
                 <strong>Twilight Princess Chronicle</strong>
-                <small>${lang === "en" ? "A bilingual fan guide with chapter notes and reference materials." : "以中英双语结构整理的 Twilight Princess 图文攻略。"}</small>
+                <small>${lang === "en" ? "An editorial guide with chapter notes, strategy highlights, and reference materials." : "以中英双语结构整理的 Twilight Princess 攻略与参考站点。"}</small>
               </span>
             </a>
             <div class="topbar-actions">
@@ -561,6 +767,12 @@ function writePolicyPages() {
 }
 
 function writeSupportFiles() {
+  for (const staleFile of ["ads.txt", "sitemap.xml"]) {
+    const stalePath = path.join(root, staleFile);
+    if (fs.existsSync(stalePath)) {
+      fs.rmSync(stalePath, { force: true });
+    }
+  }
   const baseRoutes = [
     "index.html",
     "chapters/index.html",
@@ -577,17 +789,62 @@ function writeSupportFiles() {
 
   fs.writeFileSync(
     path.join(root, "robots.txt"),
-    `User-agent: *\nAllow: /\n\nSitemap: ${siteUrl}/sitemap.xml\n`,
+    `${[
+      "User-agent: *",
+      "Allow: /",
+      ...(siteUrl ? ["", `Sitemap: ${siteUrl}/sitemap.xml`] : []),
+    ].join("\n")}\n`,
     "utf8",
   );
+  if (adsTxtEntries.length > 0) {
+    fs.writeFileSync(
+      path.join(root, "ads.txt"),
+      `${adsTxtEntries.join("\n")}\n`,
+      "utf8",
+    );
+  } else if (fs.existsSync(path.join(root, "ads.txt"))) {
+    fs.rmSync(path.join(root, "ads.txt"), { force: true });
+  }
+  if (siteUrl) {
+    fs.writeFileSync(
+      path.join(root, "sitemap.xml"),
+      `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${allRoutes.map((route) => `  <url>\n    <loc>${siteUrl}/${route}</loc>\n  </url>`).join("\n")}\n</urlset>\n`,
+      "utf8",
+    );
+  } else if (fs.existsSync(path.join(root, "sitemap.xml"))) {
+    fs.rmSync(path.join(root, "sitemap.xml"), { force: true });
+  }
   fs.writeFileSync(
-    path.join(root, "ads.txt"),
-    "# Replace this placeholder with your real advertising seller declaration before applying for AdSense.\n",
-    "utf8",
-  );
-  fs.writeFileSync(
-    path.join(root, "sitemap.xml"),
-    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${allRoutes.map((route) => `  <url>\n    <loc>${siteUrl}/${route}</loc>\n  </url>`).join("\n")}\n</urlset>\n`,
+    path.join(root, "site.webmanifest"),
+    `${JSON.stringify(
+      {
+        name: "Twilight Princess Chronicle",
+        short_name: shortName,
+        description:
+          "An editorial Twilight Princess guide with chapter walkthroughs, strategy notes, and reference pages.",
+        lang: "en",
+        start_url: "/",
+        scope: "/",
+        display: "standalone",
+        theme_color: themeColor,
+        background_color: backgroundColor,
+        ...(siteUrl ? { id: `${siteUrl}/` } : {}),
+        icons: [
+          {
+            src: "android-chrome-192x192.png",
+            sizes: "192x192",
+            type: "image/png",
+          },
+          {
+            src: "android-chrome-512x512.png",
+            sizes: "512x512",
+            type: "image/png",
+          },
+        ],
+      },
+      null,
+      2,
+    )}\n`,
     "utf8",
   );
 

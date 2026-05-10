@@ -139,13 +139,13 @@ export const pageDefinitions = [
 
 export const sourceArchiveMeta = {
   englishTitle: "Twilight Princess Chronicle",
-  englishTagline: "An English-first fan guide with a switchable Chinese edition.",
+  englishTagline: "An English-first editorial guide with a switchable Chinese edition.",
   englishDescription:
-    "A polished Twilight Princess walkthrough with story chapters, reference guides, and locally hosted screenshots.",
+    "An editorial Twilight Princess guide with chapter walkthroughs, strategy notes, and reference pages.",
   chineseTitle: "\u9ece\u660e\u516c\u4e3b\u653b\u7565\u7ad9",
-  chineseTagline: "\u4ee5\u4e2d\u82f1\u53cc\u8bed\u7ed3\u6784\u6574\u7406\u7684 Twilight Princess \u56fe\u6587\u653b\u7565\u3002",
+  chineseTagline: "\u4ee5\u4e2d\u82f1\u53cc\u8bed\u7ed3\u6784\u6574\u7406\u7684 Twilight Princess \u653b\u7565\u4e0e\u53c2\u8003\u7ad9\u70b9\u3002",
   chineseDescription:
-    "\u4e00\u4e2a\u9ed8\u8ba4\u82f1\u6587\u3001\u53ef\u5207\u6362\u4e2d\u6587\u7684 Twilight Princess \u653b\u7565\u7ad9\uff0c\u5305\u542b\u7ae0\u8282\u6d41\u7a0b\u3001\u53c2\u8003\u8d44\u6599\u4e0e\u672c\u5730\u6258\u7ba1\u56fe\u7247\u3002",
+    "\u4e00\u4e2a\u9ed8\u8ba4\u82f1\u6587\u3001\u53ef\u5207\u6362\u4e2d\u6587\u7684 Twilight Princess \u653b\u7565\u7ad9\uff0c\u5305\u542b\u7ae0\u8282\u6d41\u7a0b\u3001\u8def\u7ebf\u63d0\u793a\u4e0e\u53c2\u8003\u8d44\u6599\u3002",
 };
 
 const extractRequired = (html, pattern, label, sourceFile) => {
