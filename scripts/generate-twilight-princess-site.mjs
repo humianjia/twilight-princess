@@ -52,6 +52,8 @@ const siteConfig = await loadSiteConfig();
 
 const archive = await loadTwpSourceArchive(workspaceRoot);
 const archivePages = archive.pages;
+const englishGameTitle = sourceArchiveMeta.englishGameTitle;
+const chineseGameTitle = sourceArchiveMeta.chineseGameTitle;
 
 const navItems = [
   { key: "home", en: "Home", zh: "\u9996\u9875", href: "index.html" },
@@ -91,7 +93,7 @@ const policyPages = [
     enDescription:
       "Learn what Twilight Princess Chronicle covers, how the guide is structured, and how the project is maintained.",
     zhDescription:
-      "\u4e86\u89e3\u8fd9\u4e2a Twilight Princess \u653b\u7565\u7ad9\u7684\u5185\u5bb9\u7ed3\u6784\u3001\u66f4\u65b0\u65b9\u5f0f\u548c\u7ef4\u62a4\u539f\u5219\u3002",
+      `了解这个《${chineseGameTitle}》攻略站的内容结构、更新方式和维护原则。`,
   },
   {
     slug: "privacy",
@@ -184,9 +186,9 @@ const translationDictionary = new Map([
 
 const manualEnglishSummaries = {
   intro:
-    "A lead-in article for the Twilight Princess walkthrough series, covering naming choices, project scope, and the tone of the adventure before the route begins.",
+    `A lead-in article for ${englishGameTitle}, covering naming choices, project scope, and the tone of the adventure before the route begins.`,
   characters:
-    "A cast overview page describing the major characters of Twilight Princess and how they fit into the story's emotional and political arcs.",
+    `A cast overview page describing the major characters of ${englishGameTitle} and how they fit into the story's emotional and political arcs.`,
   "chapter-1":
     "Link's everyday life in Ordon Village gives way to the first Twilight crisis, the rescue of the village children, and the opening path into the Forest Temple.",
   "chapter-2":
@@ -204,7 +206,7 @@ const manualEnglishSummaries = {
   "chapter-8":
     "The Palace of Twilight chapter closes in on Midna's homeland and sets up the endgame with a direct confrontation against the powers behind the invasion.",
   "chapter-9":
-    "The final Hyrule Castle chapter covers the last ascent, the closing boss sequence, and the decisive end of the Twilight Princess campaign.",
+    `The final Hyrule Castle chapter covers the last ascent, the closing boss sequence, and the decisive end of the main campaign in ${englishGameTitle}.`,
   epilogue:
     "A closing article covering the end of the story, the restored balance between worlds, and the emotional aftermath of the final battle.",
   appendix:
@@ -505,8 +507,8 @@ const pageShell = ({
           ${content}
           <footer class="site-footer">
             <p>${lang === "en"
-              ? "Twilight Princess Chronicle is an editorial guide with chapter walkthroughs, strategy notes, and reference pages for easier reading."
-              : "Twilight Princess Chronicle 是一个中英双语攻略站，提供章节流程、路线提示与参考资料，方便连续阅读与查阅。"}</p>
+              ? `Twilight Princess Chronicle is an editorial guide site for ${englishGameTitle}, with walkthrough chapters, strategy notes, and reference pages.`
+              : `Twilight Princess Chronicle 是一个围绕《${chineseGameTitle}》的中英双语攻略站，提供章节流程、路线提示与参考资料，方便连续阅读与查阅。`}</p>
             <div class="footer-links">${footerPolicyLinks(lang, currentPath)}</div>
             ${publicContactEmail
               ? `<p>${lang === "en"
@@ -682,7 +684,7 @@ const renderHomePage = (lang, grouped, pageContentBySlug) => {
           <img src="${relativeUrl(
             toLanguagePath(currentPath, lang),
             `${sourceArchiveAssetPrefix}/images/2011/08/zelda_tp_cover-545x700.jpg`,
-          )}" alt="Twilight Princess cover">
+          )}" alt="${englishGameTitle} cover">
         </div>
       </section>
       <section class="content-grid intro-grid">
@@ -748,7 +750,7 @@ const renderHomePage = (lang, grouped, pageContentBySlug) => {
     currentPath,
     pageTitle:
       lang === "en"
-        ? `Twilight Princess Guide | ${sourceArchiveMeta.englishTitle}`
+        ? `${englishGameTitle} Guide | ${sourceArchiveMeta.englishTitle}`
         : sourceArchiveMeta.chineseTitle,
     description:
       lang === "en"
@@ -817,11 +819,11 @@ const renderSectionIndex = (lang, sectionKey, grouped, pageContentBySlug) => {
     description:
       lang === "en"
         ? isChapter
-          ? "Browse the full Twilight Princess walkthrough chapter by chapter, from Ordon Village to the final battle at Hyrule Castle."
-          : "Explore supporting Twilight Princess reference pages, including the story introduction, character guide, epilogue, and appendix."
+          ? `Browse the full walkthrough for ${englishGameTitle}, chapter by chapter, from Ordon Village to the final battle at Hyrule Castle.`
+          : `Explore supporting reference pages for ${englishGameTitle}, including the story introduction, character guide, epilogue, and appendix.`
         : isChapter
-          ? "\u82f1\u6587\u4e3b\u7ad9 + \u4e2d\u6587\u5207\u6362\u7684\u5267\u60c5\u6d41\u7a0b\u7d22\u5f15\u3002"
-          : "\u53ef\u4ee5\u5728\u4e2d\u82f1\u4e4b\u95f4\u5207\u6362\u7684 Twilight Princess \u8d44\u6599\u9875\u3002",
+          ? `英文主站 + 中文切换的《${chineseGameTitle}》剧情流程索引。`
+          : `可在中英之间切换的《${chineseGameTitle}》资料页。`,
     bodyClass: "page-list",
     content: body,
   });
@@ -952,8 +954,8 @@ const renderDetailPage = (lang, page, pageContentBySlug, grouped) => {
         <div class="timeline-copy">
           <h2>${lang === "en" ? "Continue Reading" : "\u9605\u8bfb\u987a\u5e8f"}</h2>
           <p>${lang === "en"
-            ? "This bilingual build keeps a stable reading order so you can move through the Twilight Princess material in a consistent sequence."
-            : "\u8fd9\u5957\u53cc\u8bed\u7ad9\u4fdd\u6301\u7a33\u5b9a\u7684\u9605\u8bfb\u987a\u5e8f\uff0c\u4fbf\u4e8e\u4f60\u6309\u4e00\u81f4\u7684\u8282\u594f\u6d4f\u89c8 Twilight Princess \u76f8\u5173\u5185\u5bb9\u3002"}</p>
+            ? `This bilingual build keeps a stable reading order so you can move through ${englishGameTitle} material in a consistent sequence.`
+            : `这套双语站保持稳定的阅读顺序，便于你按一致的节奏浏览《${chineseGameTitle}》相关内容。`}</p>
         </div>
         <div class="pager">
           ${prev
@@ -989,7 +991,7 @@ const renderPolicyPage = (lang, page) => {
             <div class="hero-copy">
               <p class="eyebrow">Site Overview</p>
               <h1>About This Site</h1>
-              <p class="lede">Twilight Princess Chronicle is an English-first fan guide built to make the game's main route, supporting references, and archived screenshots easier to browse in one place.</p>
+              <p class="lede">Twilight Princess Chronicle is an English-first fan guide built to make ${englishGameTitle} easier to browse across its main route, supporting references, and archived screenshots.</p>
             </div>
             <div class="hero-art policy-art">
               <div class="policy-mark">TP</div>
@@ -1019,7 +1021,7 @@ const renderPolicyPage = (lang, page) => {
             <div class="hero-copy">
               <p class="eyebrow">\u7ad9\u70b9\u8bf4\u660e</p>
               <h1>\u5173\u4e8e\u672c\u7ad9</h1>
-              <p class="lede">\u8fd9\u4e2a\u9879\u76ee\u628a Twilight Princess \u653b\u7565\u5185\u5bb9\u6574\u7406\u4e3a\u66f4\u6e05\u6670\u7684\u4e2d\u82f1\u53cc\u8bed\u9605\u8bfb\u7ed3\u6784\uff0c\u6839\u76ee\u5f55\u9ed8\u8ba4\u4e3a\u82f1\u6587\uff0c\u4e2d\u6587\u4f5c\u4e3a\u5e76\u884c\u7248\u672c\u63d0\u4f9b\u3002</p>
+              <p class="lede">这个项目把《${chineseGameTitle}》攻略内容整理为更清晰的中英双语阅读结构，根目录默认英文，中文作为并行版本提供。</p>
             </div>
             <div class="hero-art policy-art">
               <div class="policy-mark">TP</div>
@@ -1240,7 +1242,7 @@ const renderPolicyPage = (lang, page) => {
           <section class="content-grid">
             <article class="panel prose">
               <h2>Ownership Notice</h2>
-              <p>The Legend of Zelda, Twilight Princess, related character names, and associated marks remain the property of their respective rightsholders.</p>
+              <p>${englishGameTitle}, related character names, and associated marks remain the property of their respective rightsholders.</p>
               <p>Original site writing, layout, and editorial notes created for this project remain protected by their respective authors unless otherwise stated.</p>
             </article>
             <article class="panel keyline">
@@ -1266,7 +1268,7 @@ const renderPolicyPage = (lang, page) => {
           <section class="content-grid">
             <article class="panel prose">
               <h2>\u6743\u5229\u5f52\u5c5e\u8bf4\u660e</h2>
-              <p>The Legend of Zelda \u4e0e Twilight Princess \u76f8\u5173\u6e38\u620f\u540d\u79f0\u3001\u89d2\u8272\u540d\u79f0\u53ca\u5546\u6807\u6743\u5229\u5f52\u5c5e\u4e8e\u5176\u5404\u81ea\u7684\u6743\u5229\u4eba\u3002\u672c\u7ad9\u4e3a\u975e\u5b98\u65b9\u73a9\u5bb6\u653b\u7565\u7ad9\uff0c\u4e0e Nintendo \u4e0d\u5b58\u5728\u96b6\u5c5e\u6216\u80cc\u4e66\u5173\u7cfb\u3002</p>
+              <p>《${chineseGameTitle}》相关游戏名称、角色名称及商标权利归属于其各自的权利人。本站为非官方玩家攻略站，与 Nintendo 不存在隶属或背书关系。</p>
               <p>\u9875\u9762\u4e2d\u63d0\u53ca\u7684\u6e38\u620f\u540d\u79f0\u3001\u89d2\u8272\u547d\u540d\u4e0e\u76f8\u5173\u6807\u8bc6\uff0c\u4ecd\u5f52\u539f\u6743\u5229\u4eba\u6240\u6709\u3002</p>
             </article>
             <article class="panel keyline">

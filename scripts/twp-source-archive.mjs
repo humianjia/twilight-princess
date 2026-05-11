@@ -138,14 +138,18 @@ export const pageDefinitions = [
 ];
 
 export const sourceArchiveMeta = {
+  englishGameTitle: "The Legend of Zelda: Twilight Princess",
+  chineseGameTitle: "塞尔达传说:黎明公主",
   englishTitle: "Twilight Princess Chronicle",
-  englishTagline: "An English-first editorial guide with a switchable Chinese edition.",
+  englishTagline:
+    "An English-first editorial guide for The Legend of Zelda: Twilight Princess with a switchable Chinese edition.",
   englishDescription:
-    "An editorial Twilight Princess guide with chapter walkthroughs, strategy notes, and reference pages.",
-  chineseTitle: "\u9ece\u660e\u516c\u4e3b\u653b\u7565\u7ad9",
-  chineseTagline: "\u4ee5\u4e2d\u82f1\u53cc\u8bed\u7ed3\u6784\u6574\u7406\u7684 Twilight Princess \u653b\u7565\u4e0e\u53c2\u8003\u7ad9\u70b9\u3002",
+    "An editorial guide to The Legend of Zelda: Twilight Princess with walkthrough chapters, strategy notes, and reference pages.",
+  chineseTitle: "塞尔达传说:黎明公主攻略站",
+  chineseTagline:
+    "以中英双语结构整理的《塞尔达传说:黎明公主》攻略与参考站点。",
   chineseDescription:
-    "\u4e00\u4e2a\u9ed8\u8ba4\u82f1\u6587\u3001\u53ef\u5207\u6362\u4e2d\u6587\u7684 Twilight Princess \u653b\u7565\u7ad9\uff0c\u5305\u542b\u7ae0\u8282\u6d41\u7a0b\u3001\u8def\u7ebf\u63d0\u793a\u4e0e\u53c2\u8003\u8d44\u6599\u3002",
+    "一个默认英文、可切换中文的《塞尔达传说:黎明公主》攻略站，包含章节流程、路线提示与参考资料。",
 };
 
 const extractRequired = (html, pattern, label, sourceFile) => {
