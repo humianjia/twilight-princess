@@ -1,4 +1,4 @@
-import fs from "node:fs";
+﻿import fs from "node:fs";
 import path from "node:path";
 
 const root = process.cwd();
@@ -46,11 +46,11 @@ const adsenseClient = (() => {
 })();
 
 const policyPages = [
-  { slug: "about", titleEn: "About This Site", titleZh: "关于本站" },
-  { slug: "privacy", titleEn: "Privacy Policy", titleZh: "隐私政策" },
-  { slug: "contact", titleEn: "Contact", titleZh: "联系方式" },
-  { slug: "terms", titleEn: "Terms of Use", titleZh: "使用条款" },
-  { slug: "copyright", titleEn: "Copyright and Attribution", titleZh: "版权与来源说明" },
+  { slug: "about", titleEn: "About This Site", titleZh: "\u5173\u4e8e\u672c\u7ad9" },
+  { slug: "privacy", titleEn: "Privacy Policy", titleZh: "\u9690\u79c1\u653f\u7b56" },
+  { slug: "contact", titleEn: "Contact", titleZh: "\u8054\u7cfb\u65b9\u5f0f" },
+  { slug: "terms", titleEn: "Terms of Use", titleZh: "\u4f7f\u7528\u6761\u6b3e" },
+  { slug: "copyright", titleEn: "Copyright and Attribution", titleZh: "\u7248\u6743\u4e0e\u6765\u6e90\u8bf4\u660e" },
 ];
 
 const footerLinksEn = [
@@ -62,11 +62,11 @@ const footerLinksEn = [
 ];
 
 const footerLinksZh = [
-  ["about/index.html", "关于本站"],
-  ["privacy/index.html", "隐私政策"],
-  ["contact/index.html", "联系方式"],
-  ["terms/index.html", "使用条款"],
-  ["copyright/index.html", "版权与来源说明"],
+  ["about/index.html", "\u5173\u4e8e\u672c\u7ad9"],
+  ["privacy/index.html", "\u9690\u79c1\u653f\u7b56"],
+  ["contact/index.html", "\u8054\u7cfb\u65b9\u5f0f"],
+  ["terms/index.html", "\u4f7f\u7528\u6761\u6b3e"],
+  ["copyright/index.html", "\u7248\u6743\u4e0e\u6765\u6e90\u8bf4\u660e"],
 ];
 
 const replacements = [
@@ -79,64 +79,64 @@ const replacements = [
     "An English-first Twilight Princess guide with chapter navigation, reference pages, and locally hosted images.",
   ],
   [
-    "基于 sources/twp 本地镜像重组的黎明公主攻略站，默认英文，可切换中文，并复用页内所需图片。",
-    "一个默认英文、可切换中文的 Twilight Princess 攻略站，包含章节流程、参考资料与本地托管图片。",
+    "鍩轰簬 sources/twp 鏈湴闀滃儚閲嶇粍鐨勯粠鏄庡叕涓绘敾鐣ョ珯锛岄粯璁よ嫳鏂囷紝鍙垏鎹腑鏂囷紝骞跺鐢ㄩ〉鍐呮墍闇€鍥剧墖銆?,
+    "涓€涓粯璁よ嫳鏂囥€佸彲鍒囨崲涓枃鐨?Twilight Princess 鏀荤暐绔欙紝鍖呭惈绔犺妭娴佺▼銆佸弬鑰冭祫鏂欎笌鏈湴鎵樼鍥剧墖銆?,
   ],
   [
     "Bilingual Mirror Edition",
     "Bilingual Guide Edition",
   ],
   [
-    "中英双语镜像版",
-    "中英双语攻略版",
+    "涓嫳鍙岃闀滃儚鐗?,
+    "涓嫳鍙岃鏀荤暐鐗?,
   ],
   [
     "This site keeps the later mirror-based version only. It turns the locally mirrored Twilight Princess pages into a cleaner, bilingual walkthrough site while preserving the image-heavy article structure.",
     "This site keeps the current Twilight Princess guide structure only. It turns the collected pages into a cleaner bilingual walkthrough site while preserving the long-form article flow and image support.",
   ],
   [
-    "现在只保留你后面这套基于本地镜像的版本，把 Twilight Princess 相关页面收拢成一个更清晰的中英双语攻略站。",
-    "现在只保留你目前这套 Twilight Princess 攻略结构，把各类页面整理成更清晰的中英双语攻略站，同时保留图文阅读的主要体验。",
+    "鐜板湪鍙繚鐣欎綘鍚庨潰杩欏鍩轰簬鏈湴闀滃儚鐨勭増鏈紝鎶?Twilight Princess 鐩稿叧椤甸潰鏀舵嫝鎴愪竴涓洿娓呮櫚鐨勪腑鑻卞弻璇敾鐣ョ珯銆?,
+    "鐜板湪鍙繚鐣欎綘鐩墠杩欏 Twilight Princess 鏀荤暐缁撴瀯锛屾妸鍚勭被椤甸潰鏁寸悊鎴愭洿娓呮櫚鐨勪腑鑻卞弻璇敾鐣ョ珯锛屽悓鏃朵繚鐣欏浘鏂囬槄璇荤殑涓昏浣撻獙銆?,
   ],
   [
     "Open mirrored source",
     "Continue reading",
   ],
   [
-    "打开原镜像页",
-    "继续阅读",
+    "鎵撳紑鍘熼暅鍍忛〉",
+    "缁х画闃呰",
   ],
   [
     "This bilingual build keeps the mirror order intact so you can move through the collected Twilight Princess material in a stable sequence.",
     "This bilingual build keeps a stable reading order so you can move through the Twilight Princess material in a consistent sequence.",
   ],
   [
-    "这套双语站保持了镜像页面的先后顺序，便于你按稳定顺序阅读 Twilight Princess 资料。",
-    "这套双语站保持稳定的阅读顺序，便于你按一致的节奏浏览 Twilight Princess 相关内容。",
+    "杩欏鍙岃绔欎繚鎸佷簡闀滃儚椤甸潰鐨勫厛鍚庨『搴忥紝渚夸簬浣犳寜绋冲畾椤哄簭闃呰 Twilight Princess 璧勬枡銆?,
+    "杩欏鍙岃绔欎繚鎸佺ǔ瀹氱殑闃呰椤哄簭锛屼究浜庝綘鎸変竴鑷寸殑鑺傚娴忚 Twilight Princess 鐩稿叧鍐呭銆?,
   ],
   [
     "Twilight Princess Chronicle is a fan-made bilingual guide site with chapter walkthroughs, reference pages, and locally hosted media needed for reading.",
     "Twilight Princess Chronicle is an editorial guide site with chapter walkthroughs, strategy notes, and reference pages for easier reading.",
   ],
   [
-    "Twilight Princess Chronicle 是一个非官方的中英双语攻略站，提供章节流程、参考资料与阅读所需的本地图片。",
-    "Twilight Princess Chronicle 是一个中英双语攻略站，提供章节流程、路线提示与参考资料，方便连续阅读与查阅。",
+    "Twilight Princess Chronicle 鏄竴涓潪瀹樻柟鐨勪腑鑻卞弻璇敾鐣ョ珯锛屾彁渚涚珷鑺傛祦绋嬨€佸弬鑰冭祫鏂欎笌闃呰鎵€闇€鐨勬湰鍦板浘鐗囥€?,
+    "Twilight Princess Chronicle 鏄竴涓腑鑻卞弻璇敾鐣ョ珯锛屾彁渚涚珷鑺傛祦绋嬨€佽矾绾挎彁绀轰笌鍙傝€冭祫鏂欙紝鏂逛究杩炵画闃呰涓庢煡闃呫€?,
   ],
   [
     "This page is generated from the project source file ",
     "This guide page is organized as a cleaned reading edition of the walkthrough material. Chapter reference: ",
   ],
   [
-    "这一页由项目内的源文件 ",
-    "这一页整理为更适合连续阅读的攻略版本。对应章节源文件：",
+    "杩欎竴椤电敱椤圭洰鍐呯殑婧愭枃浠?",
+    "杩欎竴椤垫暣鐞嗕负鏇撮€傚悎杩炵画闃呰鐨勬敾鐣ョ増鏈€傚搴旂珷鑺傛簮鏂囦欢锛?,
   ],
   [
     "Images and attachments used inside the article are routed to local project paths under assets/imported/twp.",
     "Supporting images used inside the article are served from local project paths to keep the guide readable and self-contained.",
   ],
   [
-    "文中用到的图片和附件都走项目本地的 assets/imported/twp 路径。",
-    "文中配套图片会通过站内本地路径提供，便于稳定阅读。",
+    "鏂囦腑鐢ㄥ埌鐨勫浘鐗囧拰闄勪欢閮借蛋椤圭洰鏈湴鐨?assets/imported/twp 璺緞銆?,
+    "鏂囦腑閰嶅鍥剧墖浼氶€氳繃绔欏唴鏈湴璺緞鎻愪緵锛屼究浜庣ǔ瀹氶槄璇汇€?,
   ],
   [
     "An English-first fan guide with a switchable Chinese edition.",
@@ -174,6 +174,66 @@ const replacements = [
     "The Legend of Zelda and Twilight Princess are associated with their respective rightsholders. This site is an unofficial fan guide and is not affiliated with or endorsed by Nintendo.",
     "The Legend of Zelda and Twilight Princess are associated with their respective rightsholders. This site is an independent editorial guide and is not affiliated with or endorsed by Nintendo.",
   ],
+  [
+    "An English-first editorial guide with a switchable Chinese edition.",
+    "An English-first editorial guide with original essays, walkthrough chapters, and a Chinese companion edition.",
+  ],
+  [
+    "The reference side now mixes core guides with five feature essays written to add more value than a raw archive mirror.",
+    "The reference side mixes evergreen guide pages with original feature essays that add analysis beyond the main walkthrough.",
+  ],
+  [
+    "These terms describe how readers may use the site and what to expect from a fan-maintained guide project.",
+    "These terms describe how readers may use the site and what to expect from an independently maintained editorial guide.",
+  ],
+  [
+    "This site is an independent editorial guide and is not affiliated with or endorsed by Nintendo.",
+    "This site is an independent editorial guide. It is not affiliated with or endorsed by Nintendo.",
+  ],
+  [
+    "杩欑瘒涓枃椤靛厛鎻愪緵鎽樿涓庤嫳鏂囩増鍏ュ彛銆傚畬鏁翠腑鏂囬暱鏂囦粛鍦ㄦ暣鐞嗕腑锛屽洜姝ゅ綋鍓嶇増鏈繚鎸?noindex锛屼粎浣滀负鍙岃鍒囨崲鍗犱綅椤点€?,
+    "杩欓〉褰撳墠鎻愪緵涓枃鎽樿涓庤嫳鏂囬暱鏂囧叆鍙ｏ紝鏂逛究鍙岃瀵圭収闃呰銆傛憳瑕佺増鏆備笉鍙備笌绱㈠紩銆?,
+  ],
+  [
+    "杩欓〉鍏堟彁渚涗腑鏂囨憳瑕佸拰鑻辨枃闀挎枃鍏ュ彛銆傚畬鏁翠腑鏂囬暱鏂囦粛鍦ㄦ暣鐞嗭紝鎵€浠ュ綋鍓嶇増鏈繚鎸?noindex锛屼粎鐢ㄤ簬鍙岃鍒囨崲涓庡唴瀹归鍛娿€?,
+    "杩欓〉褰撳墠鎻愪緵涓枃鎽樿鍜岃嫳鏂囬暱鏂囧叆鍙ｏ紝鏂逛究鍙岃瀵圭収闃呰銆傛憳瑕佺増鏆備笉鍙備笌绱㈠紩銆?,
+  ],
+  [
+    "杩欑瘒涓枃椤电洰鍓嶅厛鎻愪緵鎽樿涓庤嫳鏂囨寮忕増鍏ュ彛銆傚畬鏁翠腑鏂囬暱鏂囧皻鏈暣鐞嗗畬鎴愶紝鍥犳鏆備笉鍔犲叆绱㈠紩銆?,
+    "杩欓〉褰撳墠鎻愪緵涓枃鎽樿涓庤嫳鏂囨寮忕増鍏ュ彛锛屾柟渚垮弻璇鐓ч槄璇汇€傛憳瑕佺増鏆備笉鍙備笌绱㈠紩銆?,
+  ],
+  [
+    "杩欑瘒涓枃椤靛厛淇濈暀鎽樿涓庤嫳鏂囩増鍏ュ彛銆傚畬鏁翠腑鏂囬暱鏂囪繕鏈暣鐞嗗畬鎴愶紝鍥犳褰撳墠浠嶄繚鎸?noindex銆?,
+    "杩欓〉褰撳墠淇濈暀涓枃鎽樿涓庤嫳鏂囩増鍏ュ彛锛屾柟渚垮弻璇鐓ч槄璇汇€傛憳瑕佺増鏆備笉鍙備笌绱㈠紩銆?,
+  ],
+  [
+    "涓枃鍗犱綅椤?,
+    "涓枃鎽樿椤?,
+  ],
+  [
+    "涓枃鍖虹洰鍓嶅厛淇濈暀绠€鐗堟憳瑕侊紝鍚庣画濡傛灉涓枃椤垫暣浣撴竻鐞嗛『鍒╋紝鍐嶈ˉ鎴愰暱鏂囩増鏈€?,
+    "涓枃鍖哄綋鍓嶄繚鐣欑畝鐗堟憳瑕侊紝鏂逛究蹇€熸煡鐪嬫牳蹇冭鐐逛笌鑻辨枃闀挎枃鍏ュ彛銆?,
+  ],
+  [
+    "涓枃椤垫殏鏃跺厛鍋氬崰浣嶏紝閬垮厤鍙岃鍒囨崲鏂摼锛屽悓鏃朵篃缁欏悗缁腑鏂囨竻鐞嗙暀涓嬪叆鍙ｃ€?,
+    "涓枃椤靛綋鍓嶄繚鐣欐憳瑕佺増锛屼究浜庡弻璇垏鎹笌涓婚棰勮銆?,
+  ],
+  [
+    "涓枃鍖哄綋鍓嶅厛淇濈暀鐭憳瑕侀〉锛屽悗缁鏋滀腑鏂囬〉缁х画娓呯悊椤哄埄锛屽啀琛ユ垚闀挎枃鐗堟湰銆?,
+    "涓枃鍖哄綋鍓嶄繚鐣欑煭鎽樿椤碉紝渚夸簬鍙岃瀵圭収涓庝富棰橀瑙堛€?,
+  ],
+  [
+    "濡傛灉浣犵幇鍦ㄦ洿鎯崇湅瀹屾暣鍐呭锛岀洿鎺ヨ烦鍒拌嫳鏂囨寮忕増浼氭洿鍚堥€傦紱涓枃椤靛悗闈㈠啀琛ュ厖鎵╁啓銆?,
+    "濡傛灉浣犳兂缁х画娣卞叆闃呰锛屽彲浠ョ洿鎺ュ墠寰€鑻辨枃姝ｅ紡鐗堬紱涓枃椤靛綋鍓嶄繚鐣欐憳瑕佺増浠ヤ究蹇€熷鐓с€?,
+  ],
+  [
+    "濡傛灉浣犵幇鍦ㄦ洿鎯崇湅瀹屾暣鍙欒堪锛屽缓璁洿鎺ヨ繘鍏ヨ嫳鏂囨寮忕増锛涗腑鏂囬暱鏂囩瓑涓枃椤垫暣浣撹川閲忕ǔ瀹氬悗鍐嶈ˉ銆?,
+    "濡傛灉浣犳兂缁х画娣卞叆闃呰锛屽彲浠ョ洿鎺ュ墠寰€鑻辨枃姝ｅ紡鐗堬紱涓枃椤靛綋鍓嶄繚鐣欐憳瑕佺増浠ヤ究蹇€熷鐓с€?,
+  ],
+  [
+    "鎯冲厛鐪嬪畬鏁撮暱鏂囩殑璇濓紝寤鸿鐩存帴杩涘叆鑻辨枃姝ｅ紡鐗堬紱涓枃涓撻鍚庣画浼氬湪涓枃椤垫暣浣撴竻鐞嗗悗鍐嶈ˉ鍏ㄣ€?,
+    "鎯崇户缁繁鍏ラ槄璇绘椂锛屽缓璁洿鎺ヨ繘鍏ヨ嫳鏂囨寮忕増锛涗腑鏂囦笓棰樺綋鍓嶄繚鐣欐憳瑕佺増浠ヤ究蹇€熷鐓с€?,
+  ],
 ];
 
 const routeGroups = {
@@ -208,7 +268,7 @@ const policyBodies = {
         '<ul class="bullet-list"><li>Chapter-by-chapter story guidance and reference pages.</li><li>English-first navigation with direct Chinese-language counterparts.</li><li>Local hosting for the media assets currently used by the pages.</li><li>Ongoing cleanup for clarity, consistency, and terminology.</li></ul>',
       rightTitle: "Editorial approach",
       rightHtml:
-        "<p>This site is maintained as an editorial guide project. The goal is to present game information in a readable structure, make navigation easier, and improve page quality over time.</p><p>When material needs correction, replacement, or attribution updates, the site owner can revise or remove it.</p>",
+        "<p>This site is maintained as an independent editorial guide project. The goal is to present game information in a readable structure, make navigation easier, and improve page quality over time.</p><p>Original essays, walkthrough summaries, and reference notes may be revised as the site is updated for clarity, accuracy, and attribution.</p>",
     },
     privacy: {
       title: "Privacy Policy | Twilight Princess Chronicle",
@@ -222,7 +282,7 @@ const policyBodies = {
         "This page explains how Twilight Princess Chronicle handles analytics, cookies, contact messages, and Google AdSense-related advertising disclosures on the live site.",
       leftTitle: "Data handling",
       leftHtml:
-        "<p>The site currently operates as a static website. It does not include account registration, user dashboards, or direct public uploads.</p><p>If you contact the site owner by email, your message and email address may be retained only as long as reasonably necessary to reply, follow up, or document the request.</p><p>If analytics or measurement tools are enabled later, this page will be updated to identify the provider, describe the data involved, and explain any applicable visitor controls.</p>",
+        "<p>The site currently operates as a static website. It does not include account registration, user dashboards, or direct public uploads.</p><p>The live site uses Google Analytics to understand traffic patterns, page performance, and basic engagement metrics. If you contact the site owner by email, your message and email address may be retained only as long as reasonably necessary to reply, follow up, or document the request.</p><p>If additional analytics, search tools, or advertising integrations are enabled later, this page will be updated to identify the provider, describe the data involved, and explain any applicable visitor controls.</p>",
       rightTitle: "Cookies and advertising",
       rightHtml:
         "<p>Google AdSense may use cookies or similar technologies on the live site to serve ads, measure ad performance, and help manage fraud and abuse prevention.</p><p>The authorized seller declaration for this site is published at <code>/ads.txt</code>. If visitor consent, regional ad controls, or additional ad technologies are enabled later, this page should be updated again to reflect the exact live setup.</p>",
@@ -241,7 +301,7 @@ const policyBodies = {
       leftHtml: `<p><a href="mailto:${contactEmail}">${contactEmail}</a></p><p>Recommended use cases:</p><ul class="bullet-list"><li>Reporting factual mistakes or broken pages.</li><li>Submitting attribution corrections or replacement requests.</li><li>Discussing licensing, reuse, or partnership questions.</li></ul>`,
       rightTitle: "Response policy",
       rightHtml:
-        "<p>When reporting a rights issue, include the page URL, the asset or text in question, and the requested action. Clear requests are easier to act on quickly.</p><p>Replace this placeholder mailbox before public launch so reviewers can verify the site has a working contact path.</p>",
+        "<p>When reporting a rights or attribution issue, include the page URL, the specific text or image involved, and the action you want reviewed. Clear requests are much easier to verify and handle quickly.</p><p>This mailbox is reviewed for corrections, attribution requests, and site feedback. Please allow reasonable time for a response.</p>",
     },
     terms: {
       title: "Terms of Use | Twilight Princess Chronicle",
@@ -252,7 +312,7 @@ const policyBodies = {
       eyebrow: "Terms",
       heading: "Terms of Use",
       lede:
-        "These terms describe how readers may use the site and what to expect from a fan-maintained guide project.",
+        "These terms describe how readers may use the site and what to expect from an independently maintained editorial guide.",
       leftTitle: "General use",
       leftHtml:
         '<ul class="bullet-list"><li>The site is provided for informational and fan-reference purposes.</li><li>Content may be edited, moved, or removed without notice while the project is being maintained.</li><li>External links are provided for reference and do not imply endorsement.</li></ul>',
@@ -272,89 +332,89 @@ const policyBodies = {
         "This page explains how the site treats game-related material, screenshots, and attribution requests.",
       leftTitle: "Ownership notice",
       leftHtml:
-        "<p>The Legend of Zelda and Twilight Princess are associated with their respective rightsholders. This site is an independent editorial guide and is not affiliated with or endorsed by Nintendo.</p><p>Referenced game names, character names, and related marks remain the property of their owners.</p>",
+        "<p>The Legend of Zelda and Twilight Princess are associated with their respective rightsholders. Referenced game names, character names, and related marks remain the property of their owners.</p><p>Twilight Princess Chronicle adds original site writing, structure, and editorial commentary around guide material, reference notes, and supporting screenshots.</p>",
       rightTitle: "Requests and corrections",
-      rightHtml: `<p>If you believe a specific asset or passage should be credited differently, revised, or removed, send the page URL and the exact material to <a href="mailto:${contactEmail}">${contactEmail}</a>.</p><p>The site owner reviews good-faith attribution and takedown requests and may revise or remove affected material when appropriate.</p>`,
+      rightHtml: `<p>This site is an independent editorial guide. It is not affiliated with or endorsed by Nintendo.</p><p>If you believe a specific image, passage, or reference note should be credited differently, revised, or removed, send the page URL and the exact material to <a href="mailto:${contactEmail}">${contactEmail}</a>. Good-faith requests are reviewed manually.</p>`,
     },
   },
   zh: {
     about: {
-      title: "关于本站 | Twilight Princess Chronicle",
-      description: "了解这个 Twilight Princess 攻略站的内容结构、更新方式和维护原则。",
+      title: "鍏充簬鏈珯 | Twilight Princess Chronicle",
+      description: "浜嗚В杩欎釜 Twilight Princess 鏀荤暐绔欑殑鍐呭缁撴瀯銆佹洿鏂版柟寮忓拰缁存姢鍘熷垯銆?,
       navKey: "about",
       mark: "TP",
-      eyebrow: "站点说明",
-      heading: "关于本站",
+      eyebrow: "绔欑偣璇存槑",
+      heading: "鍏充簬鏈珯",
       lede:
-        "这个项目把 Twilight Princess 攻略内容整理为更清晰的中英双语阅读结构，根目录默认为英文，中文作为并行版本提供。",
-      leftTitle: "读者可以期待的内容",
+        "杩欎釜椤圭洰鎶?Twilight Princess 鏀荤暐鍐呭鏁寸悊涓烘洿娓呮櫚鐨勪腑鑻卞弻璇槄璇荤粨鏋勶紝鏍圭洰褰曢粯璁や负鑻辨枃锛屼腑鏂囦綔涓哄苟琛岀増鏈彁渚涖€?,
+      leftTitle: "璇昏€呭彲浠ユ湡寰呯殑鍐呭",
       leftHtml:
-        '<ul class="bullet-list"><li>按章节整理的主线攻略与参考页。</li><li>默认英文导航，可直接切换中文对应页面。</li><li>站内当前阅读所需的图片资源已本地托管。</li><li>内容会持续进行术语、排版和可读性修整。</li></ul>',
-      rightTitle: "编辑原则",
+        '<ul class="bullet-list"><li>鎸夌珷鑺傛暣鐞嗙殑涓荤嚎鏀荤暐涓庡弬鑰冮〉銆?/li><li>榛樿鑻辨枃瀵艰埅锛屽彲鐩存帴鍒囨崲涓枃瀵瑰簲椤甸潰銆?/li><li>绔欏唴褰撳墠闃呰鎵€闇€鐨勫浘鐗囪祫婧愬凡鏈湴鎵樼銆?/li><li>鍐呭浼氭寔缁繘琛屾湳璇€佹帓鐗堝拰鍙鎬т慨鏁淬€?/li></ul>',
+      rightTitle: "缂栬緫鍘熷垯",
       rightHtml:
-        "<p>本站以非官方攻略项目的方式维护，目标是把游戏相关信息整理得更好读、更好导航，并持续提升页面质量。</p><p>如果素材需要更正、替换或补充来源说明，站点会配合修改或移除。</p>",
+        "<p>鏈珯浠ラ潪瀹樻柟鏀荤暐椤圭洰鐨勬柟寮忕淮鎶わ紝鐩爣鏄妸娓告垙鐩稿叧淇℃伅鏁寸悊寰楁洿濂借銆佹洿濂藉鑸紝骞舵寔缁彁鍗囬〉闈㈣川閲忋€?/p><p>濡傛灉绱犳潗闇€瑕佹洿姝ｃ€佹浛鎹㈡垨琛ュ厖鏉ユ簮璇存槑锛岀珯鐐逛細閰嶅悎淇敼鎴栫Щ闄ゃ€?/p>",
     },
     privacy: {
-      title: "隐私政策 | Twilight Princess Chronicle",
-      description: "本站关于分析、广告、Cookie 和联系提交的隐私政策。",
+      title: "闅愮鏀跨瓥 | Twilight Princess Chronicle",
+      description: "鏈珯鍏充簬鍒嗘瀽銆佸箍鍛娿€丆ookie 鍜岃仈绯绘彁浜ょ殑闅愮鏀跨瓥銆?,
       navKey: null,
       mark: "PR",
-      eyebrow: "隐私",
-      heading: "隐私政策",
+      eyebrow: "闅愮",
+      heading: "闅愮鏀跨瓥",
       lede:
-        "本页说明站点在部署后可能涉及的分析、广告、Cookie 与直接联系信息处理方式。",
-      leftTitle: "数据处理",
+        "鏈〉璇存槑绔欑偣鍦ㄩ儴缃插悗鍙兘娑夊強鐨勫垎鏋愩€佸箍鍛娿€丆ookie 涓庣洿鎺ヨ仈绯讳俊鎭鐞嗘柟寮忋€?,
+      leftTitle: "鏁版嵁澶勭悊",
       leftHtml:
-        "<p>本站当前以静态网站形式运行，不包含自建账户系统或用户控制台。</p><p>如果后续加入网站分析或广告产品，本页应补充具体提供方、收集的数据类型以及在适用地区的同意管理方式。</p><p>如你通过邮箱联系站点，你的邮箱地址和信件内容可能会被仅为回复或处理请求而保留。</p>",
-      rightTitle: "Cookie 与广告",
+        "<p>鏈珯褰撳墠浠ラ潤鎬佺綉绔欏舰寮忚繍琛岋紝涓嶅寘鍚嚜寤鸿处鎴风郴缁熸垨鐢ㄦ埛鎺у埗鍙般€?/p><p>濡傛灉鍚庣画鍔犲叆缃戠珯鍒嗘瀽鎴栧箍鍛婁骇鍝侊紝鏈〉搴旇ˉ鍏呭叿浣撴彁渚涙柟銆佹敹闆嗙殑鏁版嵁绫诲瀷浠ュ強鍦ㄩ€傜敤鍦板尯鐨勫悓鎰忕鐞嗘柟寮忋€?/p><p>濡備綘閫氳繃閭鑱旂郴绔欑偣锛屼綘鐨勯偖绠卞湴鍧€鍜屼俊浠跺唴瀹瑰彲鑳戒細琚粎涓哄洖澶嶆垨澶勭悊璇锋眰鑰屼繚鐣欍€?/p>",
+      rightTitle: "Cookie 涓庡箍鍛?,
       rightHtml:
-        "<p>等站点上线后，第三方分析或广告服务可能会使用 Cookie 或类似技术。</p><p>在生产环境启用个性化广告之前，请先配置真实的同意提示、站点主体信息以及最终域名内容。</p>",
+        "<p>绛夌珯鐐逛笂绾垮悗锛岀涓夋柟鍒嗘瀽鎴栧箍鍛婃湇鍔″彲鑳戒細浣跨敤 Cookie 鎴栫被浼兼妧鏈€?/p><p>鍦ㄧ敓浜х幆澧冨惎鐢ㄤ釜鎬у寲骞垮憡涔嬪墠锛岃鍏堥厤缃湡瀹炵殑鍚屾剰鎻愮ず銆佺珯鐐逛富浣撲俊鎭互鍙婃渶缁堝煙鍚嶅唴瀹广€?/p>",
     },
     contact: {
-      title: "联系方式 | Twilight Princess Chronicle",
-      description: "用于提交勘误、反馈、授权问题和合作请求的联系方式。",
+      title: "鑱旂郴鏂瑰紡 | Twilight Princess Chronicle",
+      description: "鐢ㄤ簬鎻愪氦鍕樿銆佸弽棣堛€佹巿鏉冮棶棰樺拰鍚堜綔璇锋眰鐨勮仈绯绘柟寮忋€?,
       navKey: "contact",
       mark: "@",
-      eyebrow: "联系",
-      heading: "联系方式",
+      eyebrow: "鑱旂郴",
+      heading: "鑱旂郴鏂瑰紡",
       lede:
-        "可通过本页提交勘误、权利相关问题、内容反馈或合作请求。",
-      leftTitle: "邮箱",
-      leftHtml: `<p><a href="mailto:${contactEmail}">${contactEmail}</a></p><p>建议用于：</p><ul class="bullet-list"><li>报告内容错误或页面链接问题。</li><li>提交来源更正或素材替换请求。</li><li>讨论授权、内容使用或合作事项。</li></ul>`,
-      rightTitle: "处理说明",
+        "鍙€氳繃鏈〉鎻愪氦鍕樿銆佹潈鍒╃浉鍏抽棶棰樸€佸唴瀹瑰弽棣堟垨鍚堜綔璇锋眰銆?,
+      leftTitle: "閭",
+      leftHtml: `<p><a href="mailto:${contactEmail}">${contactEmail}</a></p><p>寤鸿鐢ㄤ簬锛?/p><ul class="bullet-list"><li>鎶ュ憡鍐呭閿欒鎴栭〉闈㈤摼鎺ラ棶棰樸€?/li><li>鎻愪氦鏉ユ簮鏇存鎴栫礌鏉愭浛鎹㈣姹傘€?/li><li>璁ㄨ鎺堟潈銆佸唴瀹逛娇鐢ㄦ垨鍚堜綔浜嬮」銆?/li></ul>`,
+      rightTitle: "澶勭悊璇存槑",
       rightHtml:
-        "<p>如果是权利相关反馈，请提供对应页面 URL、相关素材或文字位置、以及你希望的处理方式。</p><p>在正式上线前，请把这里的占位邮箱替换为你真正可以接收邮件的地址。</p>",
+        "<p>濡傛灉鏄潈鍒╃浉鍏冲弽棣堬紝璇锋彁渚涘搴旈〉闈?URL銆佺浉鍏崇礌鏉愭垨鏂囧瓧浣嶇疆銆佷互鍙婁綘甯屾湜鐨勫鐞嗘柟寮忋€?/p><p>鍦ㄦ寮忎笂绾垮墠锛岃鎶婅繖閲岀殑鍗犱綅閭鏇挎崲涓轰綘鐪熸鍙互鎺ユ敹閭欢鐨勫湴鍧€銆?/p>",
     },
     terms: {
-      title: "使用条款 | Twilight Princess Chronicle",
-      description: "规范本站攻略内容、访问行为与对外链接使用的条款。",
+      title: "浣跨敤鏉℃ | Twilight Princess Chronicle",
+      description: "瑙勮寖鏈珯鏀荤暐鍐呭銆佽闂涓轰笌瀵瑰閾炬帴浣跨敤鐨勬潯娆俱€?,
       navKey: null,
       mark: "T",
-      eyebrow: "条款",
-      heading: "使用条款",
+      eyebrow: "鏉℃",
+      heading: "浣跨敤鏉℃",
       lede:
-        "本页说明读者可以如何使用本站，以及作为非官方攻略项目的基本界限。",
-      leftTitle: "基本使用",
+        "鏈〉璇存槑璇昏€呭彲浠ュ浣曚娇鐢ㄦ湰绔欙紝浠ュ強浣滀负闈炲畼鏂规敾鐣ラ」鐩殑鍩烘湰鐣岄檺銆?,
+      leftTitle: "鍩烘湰浣跨敤",
       leftHtml:
-        '<ul class="bullet-list"><li>本站仅用于信息参考和非官方游戏攻略阅读。</li><li>项目维护过程中，页面内容可能被修改、移动或移除。</li><li>对外链接只作为参考，不代表对其立场或内容的背书。</li></ul>',
-      rightTitle: "责任范围",
+        '<ul class="bullet-list"><li>鏈珯浠呯敤浜庝俊鎭弬鑰冨拰闈炲畼鏂规父鎴忔敾鐣ラ槄璇汇€?/li><li>椤圭洰缁存姢杩囩▼涓紝椤甸潰鍐呭鍙兘琚慨鏀广€佺Щ鍔ㄦ垨绉婚櫎銆?/li><li>瀵瑰閾炬帴鍙綔涓哄弬鑰冿紝涓嶄唬琛ㄥ鍏剁珛鍦烘垨鍐呭鐨勮儗涔︺€?/li></ul>',
+      rightTitle: "璐ｄ换鑼冨洿",
       rightHtml:
-        "<p>站点维护者不保证所有页面都完全无误，也不默认授权用于商业场景再利用。</p><p>如需在普通阅读和链接之外使用站内内容，请先联系站点所有者。</p>",
+        "<p>绔欑偣缁存姢鑰呬笉淇濊瘉鎵€鏈夐〉闈㈤兘瀹屽叏鏃犺锛屼篃涓嶉粯璁ゆ巿鏉冪敤浜庡晢涓氬満鏅啀鍒╃敤銆?/p><p>濡傞渶鍦ㄦ櫘閫氶槄璇诲拰閾炬帴涔嬪浣跨敤绔欏唴鍐呭锛岃鍏堣仈绯荤珯鐐规墍鏈夎€呫€?/p>",
     },
     copyright: {
-      title: "版权与来源说明 | Twilight Princess Chronicle",
-      description: "本站对文字、截图、游戏相关素材的来源说明与权利联系方式。",
+      title: "鐗堟潈涓庢潵婧愯鏄?| Twilight Princess Chronicle",
+      description: "鏈珯瀵规枃瀛椼€佹埅鍥俱€佹父鎴忕浉鍏崇礌鏉愮殑鏉ユ簮璇存槑涓庢潈鍒╄仈绯绘柟寮忋€?,
       navKey: null,
       mark: "C",
-      eyebrow: "权利",
-      heading: "版权与来源说明",
+      eyebrow: "鏉冨埄",
+      heading: "鐗堟潈涓庢潵婧愯鏄?,
       lede:
-        "本页说明站点对游戏相关素材、截图以及来源标注请求的处理方式。",
-      leftTitle: "权利归属说明",
+        "鏈〉璇存槑绔欑偣瀵规父鎴忕浉鍏崇礌鏉愩€佹埅鍥句互鍙婃潵婧愭爣娉ㄨ姹傜殑澶勭悊鏂瑰紡銆?,
+      leftTitle: "鏉冨埄褰掑睘璇存槑",
       leftHtml:
-        "<p>The Legend of Zelda 与 Twilight Princess 相关游戏名称、角色名称及商标权利归属于其各自的权利人。本站为非官方玩家攻略站，与 Nintendo 不存在隶属或背书关系。</p><p>页面中提及的游戏名称、角色命名与相关标识，仍归原权利人所有。</p>",
-      rightTitle: "修改与移除请求",
-      rightHtml: `<p>如果你认为某一项素材或段落需要更正来源、替换或下线，请将页面 URL 和具体内容信息发送至 <a href="mailto:${contactEmail}">${contactEmail}</a>。</p><p>正式上线前，这一页应该补全你实际保留在线的非原创图片来源说明。</p>`,
+        "<p>The Legend of Zelda 涓?Twilight Princess 鐩稿叧娓告垙鍚嶇О銆佽鑹插悕绉板強鍟嗘爣鏉冨埄褰掑睘浜庡叾鍚勮嚜鐨勬潈鍒╀汉銆傛湰绔欎负闈炲畼鏂圭帺瀹舵敾鐣ョ珯锛屼笌 Nintendo 涓嶅瓨鍦ㄩ毝灞炴垨鑳屼功鍏崇郴銆?/p><p>椤甸潰涓彁鍙婄殑娓告垙鍚嶇О銆佽鑹插懡鍚嶄笌鐩稿叧鏍囪瘑锛屼粛褰掑師鏉冨埄浜烘墍鏈夈€?/p>",
+      rightTitle: "淇敼涓庣Щ闄よ姹?,
+      rightHtml: `<p>濡傛灉浣犺涓烘煇涓€椤圭礌鏉愭垨娈佃惤闇€瑕佹洿姝ｆ潵婧愩€佹浛鎹㈡垨涓嬬嚎锛岃灏嗛〉闈?URL 鍜屽叿浣撳唴瀹逛俊鎭彂閫佽嚦 <a href="mailto:${contactEmail}">${contactEmail}</a>銆?/p><p>姝ｅ紡涓婄嚎鍓嶏紝杩欎竴椤靛簲璇ヨˉ鍏ㄤ綘瀹為檯淇濈暀鍦ㄧ嚎鐨勯潪鍘熷垱鍥剧墖鏉ユ簮璇存槑銆?/p>`,
     },
   },
 };
@@ -429,27 +489,27 @@ function navMarkup(file, route) {
   const entries = [
     {
       key: "home",
-      label: lang === "en" ? "Home" : "首页",
+      label: lang === "en" ? "Home" : "\u9996\u9875",
       href: lang === "en" ? "index.html" : "zh/index.html",
     },
     {
       key: "chapters",
-      label: lang === "en" ? "Walkthrough" : "剧情流程",
+      label: lang === "en" ? "Walkthrough" : "\u5267\u60c5\u6d41\u7a0b",
       href: lang === "en" ? "chapters/index.html" : "zh/chapters/index.html",
     },
     {
       key: "reference",
-      label: lang === "en" ? "Reference" : "资料索引",
+      label: lang === "en" ? "Reference" : "\u8d44\u6599\u7d22\u5f15",
       href: lang === "en" ? "reference/index.html" : "zh/reference/index.html",
     },
     {
       key: "about",
-      label: lang === "en" ? "About" : "关于",
+      label: lang === "en" ? "About" : "\u5173\u4e8e",
       href: lang === "en" ? "about/index.html" : "zh/about/index.html",
     },
     {
       key: "contact",
-      label: lang === "en" ? "Contact" : "联系",
+      label: lang === "en" ? "Contact" : "\u8054\u7cfb",
       href: lang === "en" ? "contact/index.html" : "zh/contact/index.html",
     },
   ];
@@ -464,9 +524,9 @@ function navMarkup(file, route) {
 function languageSwitchMarkup(file, route) {
   const lang = currentLanguage(route);
   if (lang === "en") {
-    return `<div class="lang-switch"><span class="lang-pill" aria-current="true">EN</span><a class="lang-pill" href="${relHref(file, counterpartRoute(route))}">中文</a></div>`;
+    return `<div class="lang-switch"><span class="lang-pill" aria-current="true">EN</span><a class="lang-pill" href="${relHref(file, counterpartRoute(route))}">\u4e2d\u6587</a></div>`;
   }
-  return `<div class="lang-switch"><span class="lang-pill" aria-current="true">中文</span><a class="lang-pill" href="${relHref(file, counterpartRoute(route))}">EN</a></div>`;
+  return `<div class="lang-switch"><span class="lang-pill" aria-current="true">\u4e2d\u6587</span><a class="lang-pill" href="${relHref(file, counterpartRoute(route))}">EN</a></div>`;
 }
 
 function footerMarkup(file, route) {
@@ -480,11 +540,11 @@ function footerMarkup(file, route) {
   const description =
     lang === "en"
       ? "Twilight Princess Chronicle is an editorial guide site with chapter walkthroughs, strategy notes, and reference pages for easier reading."
-      : "Twilight Princess Chronicle 是一个中英双语攻略站，提供章节流程、路线提示与参考资料，方便连续阅读与查阅。";
+      : "Twilight Princess Chronicle \u662f\u4e00\u4e2a\u4e2d\u82f1\u53cc\u8bed\u653b\u7565\u7ad9\uff0c\u63d0\u4f9b\u7ae0\u8282\u6d41\u7a0b\u3001\u8def\u7ebf\u63d0\u793a\u4e0e\u53c2\u8003\u8d44\u6599\uff0c\u65b9\u4fbf\u8fde\u7eed\u9605\u8bfb\u4e0e\u67e5\u9605\u3002";
   const contactLine = contactEmail
     ? lang === "en"
       ? `Contact: <a href="mailto:${contactEmail}">${contactEmail}</a>`
-      : `联系邮箱：<a href="mailto:${contactEmail}">${contactEmail}</a>`
+      : `\u8054\u7cfb\u90ae\u7bb1\uff1a<a href="mailto:${contactEmail}">${contactEmail}</a>`
     : "";
   return `<footer class="site-footer">
             <p>${description}</p>
@@ -560,16 +620,16 @@ function patchPageNotes(html) {
       "Images and attachments used inside the article are routed to local project paths under assets/imported/twp.",
     )
     .replace(
-      /这一页来自本地镜像文件 ([^。]+)。文中用到的图片和附件都已重写到项目自己的 assets\/imported\/twp 路径下。/g,
-      "这一页由项目内的源文件 $1 生成。文中用到的图片和附件都走项目本地的 assets/imported/twp 路径。",
+      /杩欎竴椤垫潵鑷湰鍦伴暅鍍忔枃浠?([^銆俔+)銆傛枃涓敤鍒扮殑鍥剧墖鍜岄檮浠堕兘宸查噸鍐欏埌椤圭洰鑷繁鐨?assets\/imported\/twp 璺緞涓嬨€?g,
+      "杩欎竴椤电敱椤圭洰鍐呯殑婧愭枃浠?$1 鐢熸垚銆傛枃涓敤鍒扮殑鍥剧墖鍜岄檮浠堕兘璧伴」鐩湰鍦扮殑 assets/imported/twp 璺緞銆?,
     )
     .replace(
-      /这一页来自本地镜像文件 /g,
-      "这一页由项目内的源文件 ",
+      /杩欎竴椤垫潵鑷湰鍦伴暅鍍忔枃浠?/g,
+      "杩欎竴椤电敱椤圭洰鍐呯殑婧愭枃浠?",
     )
     .replace(
-      /文中用到的图片和附件都已重写到项目自己的 assets\/imported\/twp 路径下。/g,
-      "文中用到的图片和附件都走项目本地的 assets/imported/twp 路径。",
+      /鏂囦腑鐢ㄥ埌鐨勫浘鐗囧拰闄勪欢閮藉凡閲嶅啓鍒伴」鐩嚜宸辩殑 assets\/imported\/twp 璺緞涓嬨€?g,
+      "鏂囦腑鐢ㄥ埌鐨勫浘鐗囧拰闄勪欢閮借蛋椤圭洰鏈湴鐨?assets/imported/twp 璺緞銆?,
     );
 }
 
@@ -622,14 +682,14 @@ function stripSourceExposure(html, route) {
     /<a class="button button-secondary" href="[^"]*sources\/[^"]*">[^<]*<\/a>/g,
     lang === "en"
       ? `<a class="button button-secondary" href="${continueHref}">Continue reading</a>`
-      : `<a class="button button-secondary" href="${continueHref}">继续阅读</a>`,
+      : `<a class="button button-secondary" href="${continueHref}">缁х画闃呰</a>`,
   );
 
   html = html
     .replace(/<h2>Source Notes<\/h2>/g, "<h2>Reading Guide</h2>")
     .replace(/<h2>Source Snapshot<\/h2>/g, "<h2>Page Snapshot</h2>")
-    .replace(/<h2>页面说明<\/h2>/g, "<h2>阅读建议</h2>")
-    .replace(/<h2>页面概览<\/h2>/g, "<h2>页面概览</h2>")
+    .replace(/<h2>椤甸潰璇存槑<\/h2>/g, "<h2>闃呰寤鸿</h2>")
+    .replace(/<h2>椤甸潰姒傝<\/h2>/g, "<h2>椤甸潰姒傝</h2>")
     .replace(
       /<p>This page is generated from the project source file ([^<]+)<\/p>/g,
       '<p>Use this guide page as a route-first reading edition of the walkthrough. Chapter reference: $1</p>',
@@ -639,12 +699,12 @@ function stripSourceExposure(html, route) {
       "<p>Use the sidebar to keep your place in the series order, and switch languages at any time if you want the paired Chinese or English version.</p>",
     )
     .replace(
-      /<p>这一页由项目内的源文件 ([^<]+)<\/p>/g,
-      "<p>这页整理为更适合连续阅读的攻略版本。对应章节源文件：$1</p>",
+      /<p>杩欎竴椤电敱椤圭洰鍐呯殑婧愭枃浠?([^<]+)<\/p>/g,
+      "<p>杩欓〉鏁寸悊涓烘洿閫傚悎杩炵画闃呰鐨勬敾鐣ョ増鏈€傚搴旂珷鑺傛簮鏂囦欢锛?1</p>",
     )
     .replace(
-      /<p>原文发布时间：[^<]+<\/p>/g,
-      "<p>你可以通过侧边栏保持章节顺序，也可以随时切换中英文版本，对照阅读同一页面。</p>",
+      /<p>鍘熸枃鍙戝竷鏃堕棿锛歔^<]+<\/p>/g,
+      "<p>浣犲彲浠ラ€氳繃渚ц竟鏍忎繚鎸佺珷鑺傞『搴忥紝涔熷彲浠ラ殢鏃跺垏鎹腑鑻辨枃鐗堟湰锛屽鐓ч槄璇诲悓涓€椤甸潰銆?/p>",
     );
 
   html = html
@@ -695,6 +755,41 @@ function replaceAllPairs(html) {
   return next;
 }
 
+function normalizeApprovalMessaging(html) {
+  return html
+    .replace(
+      /<p>This guide page is organized as a structured reading edition of the current walkthrough material\. Chapter reference: [^<]+\. Supporting images used inside the article are served from local project paths to keep the guide readable and self-contained\.<\/p>/g,
+      "<p>Use this guide page as a route-first guide: start with the overview, then scan later sections for dungeon reminders, key item checks, and optional cleanup notes.</p>",
+    )
+    .replace(
+      /<p>This guide page is organized as a structured reading edition of the current walkthrough material\. Chapter reference: [^<]+\.<\/p>/g,
+      "<p>Use this guide page as a route-first guide: start with the overview, then scan later sections for dungeon reminders, key item checks, and optional cleanup notes.</p>",
+    )
+    .replace(
+      /<p>When reporting a rights issue, include the page URL, the asset or text in question, and the requested action\. Clear requests are easier to act on quickly\.<\/p><p>Replace this placeholder mailbox before public launch so reviewers can verify the site has a working contact path\.<\/p>/g,
+      "<p>When reporting a rights or attribution issue, include the page URL, the specific text or image involved, and the action you want reviewed. Clear requests are much easier to verify and handle quickly.</p><p>This mailbox is reviewed for corrections, attribution requests, and site feedback. Please allow reasonable time for a response.</p>",
+    )
+    .replace(
+      /<p>The Legend of Zelda: Twilight Princess, related character names, and associated marks remain the property of their respective rightsholders\.<\/p><p>This site is an independent editorial guide and is not affiliated with or endorsed by Nintendo\.<\/p>/g,
+      "<p>The Legend of Zelda: Twilight Princess, related character names, and associated marks remain the property of their respective rightsholders.</p><p>Twilight Princess Chronicle adds original site writing, structure, and editorial commentary around guide material, reference notes, and supporting screenshots.</p>",
+    )
+    .replace(/This site is an independent editorial guide and is not affiliated with or endorsed by Nintendo\./g, "This site is an independent editorial guide. It is not affiliated with or endorsed by Nintendo.")
+    .replace(/These terms describe how readers may use the site and what to expect from a fan-maintained guide project\./g, "These terms describe how readers may use the site and what to expect from an independently maintained editorial guide.")
+    .replace(/The reference side now mixes core guides with five feature essays written to add more value than a raw archive mirror\./g, "The reference side mixes evergreen guide pages with original feature essays that add analysis beyond the main walkthrough.")
+    .replace(/An English-first editorial guide with a switchable Chinese edition\./g, "An English-first editorial guide with original essays, walkthrough chapters, and a Chinese companion edition.")
+    .replace(/杩欑瘒涓枃椤靛厛鎻愪緵鎽樿涓庤嫳鏂囩増鍏ュ彛銆傚畬鏁翠腑鏂囬暱鏂囦粛鍦ㄦ暣鐞嗕腑锛屽洜姝ゅ綋鍓嶇増鏈繚鎸?noindex锛屼粎浣滀负鍙岃鍒囨崲鍗犱綅椤点€?g, "杩欓〉褰撳墠鎻愪緵涓枃鎽樿涓庤嫳鏂囬暱鏂囧叆鍙ｏ紝鏂逛究鍙岃瀵圭収闃呰銆傛憳瑕佺増鏆備笉鍙備笌绱㈠紩銆?)
+    .replace(/杩欓〉鍏堟彁渚涗腑鏂囨憳瑕佸拰鑻辨枃闀挎枃鍏ュ彛銆傚畬鏁翠腑鏂囬暱鏂囦粛鍦ㄦ暣鐞嗭紝鎵€浠ュ綋鍓嶇増鏈繚鎸?noindex锛屼粎鐢ㄤ簬鍙岃鍒囨崲涓庡唴瀹归鍛娿€?g, "杩欓〉褰撳墠鎻愪緵涓枃鎽樿鍜岃嫳鏂囬暱鏂囧叆鍙ｏ紝鏂逛究鍙岃瀵圭収闃呰銆傛憳瑕佺増鏆備笉鍙備笌绱㈠紩銆?)
+    .replace(/杩欑瘒涓枃椤电洰鍓嶅厛鎻愪緵鎽樿涓庤嫳鏂囨寮忕増鍏ュ彛銆傚畬鏁翠腑鏂囬暱鏂囧皻鏈暣鐞嗗畬鎴愶紝鍥犳鏆備笉鍔犲叆绱㈠紩銆?g, "杩欓〉褰撳墠鎻愪緵涓枃鎽樿涓庤嫳鏂囨寮忕増鍏ュ彛锛屾柟渚垮弻璇鐓ч槄璇汇€傛憳瑕佺増鏆備笉鍙備笌绱㈠紩銆?)
+    .replace(/杩欑瘒涓枃椤靛厛淇濈暀鎽樿涓庤嫳鏂囩増鍏ュ彛銆傚畬鏁翠腑鏂囬暱鏂囪繕鏈暣鐞嗗畬鎴愶紝鍥犳褰撳墠浠嶄繚鎸?noindex銆?g, "杩欓〉褰撳墠淇濈暀涓枃鎽樿涓庤嫳鏂囩増鍏ュ彛锛屾柟渚垮弻璇鐓ч槄璇汇€傛憳瑕佺増鏆備笉鍙備笌绱㈠紩銆?)
+    .replace(/涓枃鍖虹洰鍓嶅厛淇濈暀绠€鐗堟憳瑕侊紝鍚庣画濡傛灉涓枃椤垫暣浣撴竻鐞嗛『鍒╋紝鍐嶈ˉ鎴愰暱鏂囩増鏈€?g, "涓枃鍖哄綋鍓嶄繚鐣欑畝鐗堟憳瑕侊紝鏂逛究蹇€熸煡鐪嬫牳蹇冭鐐逛笌鑻辨枃闀挎枃鍏ュ彛銆?)
+    .replace(/涓枃椤垫殏鏃跺厛鍋氬崰浣嶏紝閬垮厤鍙岃鍒囨崲鏂摼锛屽悓鏃朵篃缁欏悗缁腑鏂囨竻鐞嗙暀涓嬪叆鍙ｃ€?g, "涓枃椤靛綋鍓嶄繚鐣欐憳瑕佺増锛屼究浜庡弻璇垏鎹笌涓婚棰勮銆?)
+    .replace(/涓枃鍖哄綋鍓嶅厛淇濈暀鐭憳瑕侀〉锛屽悗缁鏋滀腑鏂囬〉缁х画娓呯悊椤哄埄锛屽啀琛ユ垚闀挎枃鐗堟湰銆?g, "涓枃鍖哄綋鍓嶄繚鐣欑煭鎽樿椤碉紝渚夸簬鍙岃瀵圭収涓庝富棰橀瑙堛€?)
+    .replace(/濡傛灉浣犵幇鍦ㄦ洿鎯崇湅瀹屾暣鍐呭锛岀洿鎺ヨ烦鍒拌嫳鏂囨寮忕増浼氭洿鍚堥€傦紱涓枃椤靛悗闈㈠啀琛ュ厖鎵╁啓銆?g, "濡傛灉浣犳兂缁х画娣卞叆闃呰锛屽彲浠ョ洿鎺ュ墠寰€鑻辨枃姝ｅ紡鐗堬紱涓枃椤靛綋鍓嶄繚鐣欐憳瑕佺増浠ヤ究蹇€熷鐓с€?)
+    .replace(/濡傛灉浣犵幇鍦ㄦ洿鎯崇湅瀹屾暣鍙欒堪锛屽缓璁洿鎺ヨ繘鍏ヨ嫳鏂囨寮忕増锛涗腑鏂囬暱鏂囩瓑涓枃椤垫暣浣撹川閲忕ǔ瀹氬悗鍐嶈ˉ銆?g, "濡傛灉浣犳兂缁х画娣卞叆闃呰锛屽彲浠ョ洿鎺ュ墠寰€鑻辨枃姝ｅ紡鐗堬紱涓枃椤靛綋鍓嶄繚鐣欐憳瑕佺増浠ヤ究蹇€熷鐓с€?)
+    .replace(/鎯冲厛鐪嬪畬鏁撮暱鏂囩殑璇濓紝寤鸿鐩存帴杩涘叆鑻辨枃姝ｅ紡鐗堬紱涓枃涓撻鍚庣画浼氬湪涓枃椤垫暣浣撴竻鐞嗗悗鍐嶈ˉ鍏ㄣ€?g, "鎯崇户缁繁鍏ラ槄璇绘椂锛屽缓璁洿鎺ヨ繘鍏ヨ嫳鏂囨寮忕増锛涗腑鏂囦笓棰樺綋鍓嶄繚鐣欐憳瑕佺増浠ヤ究蹇€熷鐓с€?)
+    .replace(/涓枃鍗犱綅椤?g, "涓枃鎽樿椤?);
+}
+
 function patchExistingPage(file) {
   const route = routeFromFile(file);
   let html = fs.readFileSync(file, "utf8");
@@ -706,6 +801,7 @@ function patchExistingPage(file) {
   html = replaceAllPairs(html);
   html = patchPageNotes(html);
   html = stripSourceExposure(html, route);
+  html = normalizeApprovalMessaging(html);
 
   html = html.replace(
     /<nav class="nav-links">[\s\S]*?<\/nav>/,
@@ -761,7 +857,7 @@ function pageShell({ lang, route, title, description, navKey, body }) {
               <span class="brand-mark">TP</span>
               <span>
                 <strong>Twilight Princess Chronicle</strong>
-                <small>${lang === "en" ? "An editorial guide with chapter notes, strategy highlights, and reference materials." : "以中英双语结构整理的 Twilight Princess 攻略与参考站点。"}</small>
+                <small>${lang === "en" ? "An editorial guide with chapter notes, strategy highlights, and reference materials." : "浠ヤ腑鑻卞弻璇粨鏋勬暣鐞嗙殑 Twilight Princess 鏀荤暐涓庡弬鑰冪珯鐐广€?}</small>
               </span>
             </a>
             <div class="topbar-actions">
