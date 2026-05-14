@@ -102,7 +102,7 @@ const policyPages = [
     enTitle: "Privacy Policy",
     zhTitle: "\u9690\u79c1\u653f\u7b56",
     enDescription:
-      "Read how Twilight Princess Chronicle may handle analytics, advertising, cookies, and contact messages after launch.",
+      "Read how Twilight Princess Chronicle handles analytics, advertising, cookies, and contact messages on the live site.",
     zhDescription:
       "\u672c\u7ad9\u5173\u4e8e\u5206\u6790\u3001\u5e7f\u544a\u3001Cookie \u548c\u8054\u7cfb\u63d0\u4ea4\u7684\u9690\u79c1\u653f\u7b56\u3002",
   },
@@ -471,7 +471,7 @@ const pageShell = ({
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>${pageTitle}</title>
         <meta name="description" content="${escapeHtml(description)}">
-        <meta name="robots" content="${lang === "en" ? "index,follow,max-image-preview:large" : "noindex,follow,max-image-preview:large"}">
+        <meta name="robots" content="index,follow,max-image-preview:large">
         <meta name="theme-color" content="${manifestThemeColor}">
         <meta name="application-name" content="${siteTitle}">
         <link rel="icon" href="${faviconIcoHref}" sizes="any">
@@ -694,8 +694,8 @@ const renderHomePage = (lang, grouped, pageContentBySlug) => {
             ? "This edition focuses on readable walkthrough prose, stable navigation, and bilingual browsing. The goal is to make the main route, side references, and planning notes easier to use across the full campaign."
             : "这个版本更强调清晰的攻略文字、稳定的站内导航和中英双语切换，让主线流程、补充资料与路线提示都更方便查阅。"}</p>
           <p>${lang === "en"
-            ? "English is the default at the site root, and every page can switch directly to its Chinese counterpart under /zh/."
-            : "\u6839\u76ee\u5f55\u9ed8\u8ba4\u5c55\u793a\u82f1\u6587\uff0c\u6bcf\u4e00\u9875\u90fd\u53ef\u4ee5\u76f4\u63a5\u5207\u6362\u5230 /zh/ \u4e0b\u7684\u4e2d\u6587\u7248\u672c\u3002"}</p>
+            ? "Every major page is published in paired English and Chinese versions so readers can move between walkthrough chapters and reference sections in either language."
+            : "主要页面均提供中英双语对应版本，方便按自己习惯在流程攻略与资料页之间连续阅读。"}</p>
         </article>
         <article class="panel keyline">
           <h2>${lang === "en" ? "Guide At a Glance" : "\u7ad9\u70b9\u8303\u56f4"}</h2>
@@ -710,8 +710,8 @@ const renderHomePage = (lang, grouped, pageContentBySlug) => {
               ? `${archive.copiedRefs.length} supporting media items`
               : `${archive.copiedRefs.length} 个配套图像与媒体资源`,
             lang === "en"
-              ? "English root site plus Chinese companion routes"
-              : "英文根目录 + 中文 zh 对应路由",
+              ? "Bilingual page pairs with direct language switching"
+              : "中英双语页面一一对应，可直接切换",
           ])}
         </article>
       </section>
@@ -991,7 +991,7 @@ const renderPolicyPage = (lang, page) => {
             <div class="hero-copy">
               <p class="eyebrow">Site Overview</p>
               <h1>About This Site</h1>
-              <p class="lede">Twilight Princess Chronicle is an English-first fan guide built to make ${englishGameTitle} easier to browse across its main route, supporting references, and archived screenshots.</p>
+              <p class="lede">Twilight Princess Chronicle is a bilingual editorial guide built to make ${englishGameTitle} easier to browse across its main route, supporting references, and visual notes.</p>
             </div>
             <div class="hero-art policy-art">
               <div class="policy-mark">TP</div>
@@ -1003,14 +1003,14 @@ const renderPolicyPage = (lang, page) => {
               ${listItems([
                 "Chapter-by-chapter walkthrough coverage for the full main story route.",
                 "Reference pages for story setup, characters, ending notes, and optional cleanup material.",
-                "English-first navigation with direct Chinese counterparts for the current site structure.",
+                "Matched English and Chinese pages across the current site structure.",
                 "Locally hosted screenshots and imported media used to support reading and route context.",
               ])}
             </article>
             <article class="panel keyline">
               <h2>Editorial Approach</h2>
-              <p>The site is maintained as a fan reference project rather than an official publisher resource. Its purpose is to organize walkthrough material clearly, improve readability, and keep the current archive usable as a structured guide.</p>
-              <p>Pages may be revised over time for wording, consistency, source attribution, or navigation. If a page needs correction or a source note needs updating, the site owner may edit or remove the affected material.</p>
+              <p>The site is maintained as an independent editorial guide and is not an official publisher resource. Its purpose is to organize walkthrough material clearly, improve readability, and keep the full route and supporting references easy to navigate.</p>
+              <p>Pages may be revised over time for wording, consistency, attribution, or navigation quality. If a page needs correction or a rights note needs updating, the site owner may edit or remove the affected material.</p>
             </article>
           </section>
         </main>
@@ -1021,7 +1021,7 @@ const renderPolicyPage = (lang, page) => {
             <div class="hero-copy">
               <p class="eyebrow">\u7ad9\u70b9\u8bf4\u660e</p>
               <h1>\u5173\u4e8e\u672c\u7ad9</h1>
-              <p class="lede">这个项目把《${chineseGameTitle}》攻略内容整理为更清晰的中英双语阅读结构，根目录默认英文，中文作为并行版本提供。</p>
+              <p class="lede">这个项目把《${chineseGameTitle}》攻略内容整理为更清晰的中英双语阅读结构，方便在主线流程、专题资料与附录之间连续查阅。</p>
             </div>
             <div class="hero-art policy-art">
               <div class="policy-mark">TP</div>
@@ -1064,12 +1064,12 @@ const renderPolicyPage = (lang, page) => {
               <h2>Information We Handle</h2>
               <p>The current site is a static guide and does not provide account registration, user dashboards, or direct public uploads. Most visitors can browse the site without actively submitting personal information.</p>
               <p>If you contact the site owner by email, your email address and the contents of your message may be retained only as long as reasonably necessary to respond, follow up, or document the request.</p>
-              <p>If analytics, search tools, or advertising services are added later, this policy should be updated to identify the provider, explain what data is collected, and note any visitor controls or consent tools used on the live site.</p>
+              <p>The site may use standard analytics, search, or advertising services that support site operation, audience measurement, and ad delivery. This page should reflect the providers and visitor controls currently used on the live site.</p>
             </article>
             <article class="panel keyline">
               <h2>Cookies And Advertising</h2>
               <p>Google AdSense may use cookies or similar technologies on the live site to serve ads, measure ad performance, and support fraud and abuse prevention.</p>
-              <p>The authorized seller declaration for this site is published at <code>/ads.txt</code>. If visitor consent tools, regional ad controls, or additional advertising technologies are enabled later, this page should be updated again to reflect the exact live setup.</p>
+              <p>The authorized seller declaration for this site is published at <code>/ads.txt</code>. Any visitor consent tools, regional ad controls, or additional advertising technologies used on the live site should be documented here in their current form.</p>
             </article>
           </section>
         </main>
@@ -1129,7 +1129,7 @@ const renderPolicyPage = (lang, page) => {
             <article class="panel keyline">
               <h2>How To Reach Out</h2>
               <p>When reporting a rights or attribution issue, include the page URL, the specific text or image involved, and the action you want reviewed. Clear requests are much easier to verify and handle quickly.</p>
-              <p>If the site is launched publicly, replace the placeholder address with a monitored production mailbox so visitors and reviewers can confirm that the project has a working contact path.</p>
+              <p>The published contact address on this page should remain monitored so visitors, rightsholders, and reviewers can confirm that the project has a working response path.</p>
             </article>
           </section>
         </main>
@@ -1190,7 +1190,7 @@ const renderPolicyPage = (lang, page) => {
             </article>
             <article class="panel keyline">
               <h2>Limitations And Rights</h2>
-              <p>The site owner does not guarantee that every page is complete, error-free, or suitable for commercial reuse. Visitors should treat the guide as a maintained fan resource rather than an official publication.</p>
+              <p>The site owner does not guarantee that every page is complete, error-free, or suitable for commercial reuse. Visitors should treat the guide as an independent editorial publication rather than an official game manual.</p>
               <p>If you want to reuse site material beyond ordinary reading, citation, or linking, request permission first and verify that any third-party rights are properly respected.</p>
             </article>
           </section>
@@ -1242,13 +1242,13 @@ const renderPolicyPage = (lang, page) => {
           <section class="content-grid">
             <article class="panel prose">
               <h2>Ownership Notice</h2>
-              <p>${englishGameTitle}, related character names, and associated marks remain the property of their respective rightsholders.</p>
-              <p>Original site writing, layout, and editorial notes created for this project remain protected by their respective authors unless otherwise stated.</p>
+              <p>${englishGameTitle}, related character names, screenshots, and associated marks remain the property of their respective rightsholders.</p>
+              <p>Original site writing, layout, editorial notes, and other newly created site presentation elements remain protected by their respective authors unless otherwise stated.</p>
             </article>
             <article class="panel keyline">
               <h2>Attribution Requests</h2>
               <p>This site is an independent editorial guide and is not affiliated with or endorsed by Nintendo.</p>
-              <p>If you believe a specific image, passage, or reference note should be credited differently, revised, or removed, send the page URL and the exact material in question to <a href="mailto:${publicContactEmail}">${publicContactEmail}</a>.</p>
+              <p>If you believe a specific image, passage, or reference note should be credited differently, revised, or removed, send the page URL, the exact material in question, and the requested change to <a href="mailto:${publicContactEmail}">${publicContactEmail}</a>.</p>
             </article>
           </section>
         </main>
@@ -1274,7 +1274,7 @@ const renderPolicyPage = (lang, page) => {
             <article class="panel keyline">
               <h2>\u4fee\u6539\u4e0e\u79fb\u9664\u8bf7\u6c42</h2>
               <p>\u5982\u679c\u4f60\u8ba4\u4e3a\u67d0\u4e00\u9879\u7d20\u6750\u6216\u6bb5\u843d\u9700\u8981\u66f4\u6b63\u6765\u6e90\uff0c\u66ff\u6362\u6216\u4e0b\u7ebf\uff0c\u8bf7\u5c06\u9875\u9762 URL \u548c\u5177\u4f53\u5185\u5bb9\u4fe1\u606f\u53d1\u9001\u81f3 <a href="mailto:${publicContactEmail}">${publicContactEmail}</a>\u3002</p>
-              <p>\u6b63\u5f0f\u4e0a\u7ebf\u524d\uff0c\u8fd9\u4e00\u9875\u5e94\u8be5\u8865\u5168\u4f60\u5b9e\u9645\u4fdd\u7559\u5728\u7ebf\u7684\u975e\u539f\u521b\u56fe\u7247\u6765\u6e90\u8bf4\u660e\u3002</p>
+              <p>\u7ad9\u70b9\u4f1a\u6839\u636e\u5177\u4f53\u53cd\u9988\u590d\u6838\u76f8\u5173\u6765\u6e90\u8bf4\u660e\uff0c\u5e76\u5728\u5fc5\u8981\u65f6\u8865\u5145\u3001\u4fee\u8ba2\u6216\u79fb\u9664\u76f8\u5173\u5185\u5bb9\u3002</p>
             </article>
           </section>
         </main>
@@ -2250,8 +2250,7 @@ const allPageRoutes = [
   ...archivePages.flatMap((page) => [page.routePath, page.paths.zh]),
 ];
 const sitemapRoutes = [
-  ...baseRoutes,
-  ...archivePages.map((page) => page.routePath),
+  ...allPageRoutes,
 ];
 
 await fs.writeFile(

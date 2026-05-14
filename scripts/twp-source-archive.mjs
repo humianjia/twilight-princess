@@ -142,14 +142,14 @@ export const sourceArchiveMeta = {
   chineseGameTitle: "塞尔达传说:黎明公主",
   englishTitle: "Twilight Princess Chronicle",
   englishTagline:
-    "An English-first editorial guide for The Legend of Zelda: Twilight Princess with a switchable Chinese edition.",
+    "A bilingual editorial guide to The Legend of Zelda: Twilight Princess with walkthrough chapters and reference pages.",
   englishDescription:
     "An editorial guide to The Legend of Zelda: Twilight Princess with walkthrough chapters, strategy notes, and reference pages.",
   chineseTitle: "塞尔达传说:黎明公主攻略站",
   chineseTagline:
-    "以中英双语结构整理的《塞尔达传说:黎明公主》攻略与参考站点。",
+    "《塞尔达传说:黎明公主》的中英双语攻略与资料整理站。",
   chineseDescription:
-    "一个默认英文、可切换中文的《塞尔达传说:黎明公主》攻略站，包含章节流程、路线提示与参考资料。",
+    "《塞尔达传说:黎明公主》的中英双语攻略站，包含章节流程、路线提示与参考资料。",
 };
 
 const extractRequired = (html, pattern, label, sourceFile) => {
